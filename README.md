@@ -150,6 +150,4 @@ Reference ranges and medical interpretation depend on many factors. Results shou
 
 ---
 
-**MedReport** / React · PDF.js · JavaScript
-
-*Making medical reports readable.*
+   *Making medical reports readable.*

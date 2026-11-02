@@ -1,28 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import UploadBox from "./components/UploadBox";
 import ResultCard from "./components/ResultCard";
 import Summary from "./components/Summary";
 import AttentionCard from "./components/AttentionCard";
-import Splash from "./components/Splash";
 import { extractLines } from "./utils/extractText";
 import { parseLines } from "./utils/parseReport";
 import { analyze } from "./utils/analyze";
+import { signOut } from "firebase/auth";
+import { auth } from "./firebase";
 import "./App.css";
 
 export default function App() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [phase, setPhase] = useState("show"); // show → leaving → done
-
-  useEffect(() => {
-    const t1 = setTimeout(() => setPhase("leaving"), 2000); // start fading
-    const t2 = setTimeout(() => setPhase("done"), 2600); // remove from page
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, []);
 
   async function handleFile(file) {
     setLoading(true);
@@ -57,9 +48,16 @@ export default function App() {
 
   return (
     <div className="app">
-      {phase !== "done" && <Splash leaving={phase === "leaving"} />}
-
       <header>
+        <div className="user-bar">
+          <span className="avatar" aria-hidden="true">
+            {auth.currentUser?.email?.[0]?.toUpperCase()}
+          </span>
+          <span className="userEmail">{auth.currentUser?.email}</span>
+          <button className="logoutBtn" onClick={() => signOut(auth)}>
+            Logout
+          </button>
+        </div>
         <h1>Medical Report Explainer</h1>
         <p className="tag">
           Upload a lab report and get a plain-language explanation. Your file is read in this browser and is never uploaded.
