@@ -1,0 +1,31 @@
+:root {
+  --bg: #eef3f5;
+  --surface: #ffffff;
+  --ink: #13232b;
+  --muted: #5b6b73;
+  --line: #d6e0e5;
+  --teal: #0f5c63;
+  --teal-soft: #dceeef;
+  --zone: #8cc7b4;
+  --low: #2f6db5;
+  --low-soft: #e3eef9;
+  --high: #c2570c;
+  --high-soft: #fbebdd;
+  --ok: #2e7d5b;
+  --ok-soft: #e0f1e8;
+  --urgent: #b3261e;
+  --urgent-soft: #fce9e7;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font-family: inherit; }
