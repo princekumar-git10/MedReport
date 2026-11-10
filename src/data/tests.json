@@ -1,217 +1,772 @@
 [
   {
     "name": "Hemoglobin",
-    "aliases": [
-      "hemoglobin",
-      "haemoglobin",
-      "hb"
-    ],
+    "aliases": ["hemoglobin", "haemoglobin", "hb"],
     "unit": "g/dL",
-    "low": 13.0,
-    "high": 17.0,
+    "low": 12.0,
+    "high": 17.5,
     "what": "Protein in red blood cells that carries oxygen around the body.",
     "whyLow": "Can be associated with low iron, vitamin deficiencies, or blood loss.",
     "whyHigh": "Can be associated with dehydration, smoking, or living at high altitude.",
-    "questions": [
-      "Could my low hemoglobin be related to my diet or iron levels?",
-      "Should I get an iron or B12 test?"
-    ]
+    "questions": ["Could my hemoglobin level be related to my diet or iron levels?", "Should I get an iron or B12 test?"]
+  },
+  {
+    "name": "RBC Count",
+    "aliases": ["rbc count", "rbc", "red blood cell count", "red blood cells", "total rbc"],
+    "unit": "million/uL",
+    "low": 4.5,
+    "high": 5.5,
+    "what": "Red blood cells carry oxygen from your lungs to the rest of your body.",
+    "whyLow": "Can be associated with anaemia, nutritional deficiency, or bone marrow issues.",
+    "whyHigh": "Can be associated with dehydration, smoking, or lung disease.",
+    "questions": ["Do I need further tests to find the cause?", "Is this related to my haemoglobin level?"]
+  },
+  {
+    "name": "PCV / Hematocrit",
+    "aliases": ["pcv", "hematocrit", "haematocrit", "hct", "packed cell volume"],
+    "unit": "%",
+    "low": 36,
+    "high": 50,
+    "what": "Percentage of your blood volume made up of red blood cells.",
+    "whyLow": "Can be associated with anaemia, blood loss, or nutritional deficiencies.",
+    "whyHigh": "Can be associated with dehydration, smoking, or lung conditions.",
+    "questions": ["Is my PCV consistent with my hemoglobin level?", "Do I need further evaluation?"]
+  },
+  {
+    "name": "MCV",
+    "aliases": ["mcv", "mean corpuscular volume", "mean cell volume"],
+    "unit": "fL",
+    "low": 80,
+    "high": 100,
+    "what": "Average size of your red blood cells.",
+    "whyLow": "Can be associated with iron deficiency or thalassemia trait.",
+    "whyHigh": "Can be associated with B12 or folate deficiency, or liver disease.",
+    "questions": ["Does this indicate iron or vitamin deficiency?", "Should I get an iron studies panel?"]
+  },
+  {
+    "name": "MCH",
+    "aliases": ["mch", "mean corpuscular hemoglobin", "mean cell hemoglobin"],
+    "unit": "pg",
+    "low": 27,
+    "high": 32,
+    "what": "Average amount of hemoglobin in each red blood cell.",
+    "whyLow": "Can be associated with iron deficiency.",
+    "whyHigh": "Can be associated with B12 or folate deficiency.",
+    "questions": ["Is this consistent with the MCV result?", "Should I get a nutritional panel?"]
+  },
+  {
+    "name": "MCHC",
+    "aliases": ["mchc", "mean corpuscular hemoglobin concentration"],
+    "unit": "g/dL",
+    "low": 32,
+    "high": 36,
+    "what": "Average concentration of hemoglobin in each red blood cell.",
+    "whyLow": "Can be associated with iron deficiency anaemia.",
+    "whyHigh": "Can be seen in hereditary spherocytosis or severe dehydration.",
+    "questions": ["Does this point to a specific type of anaemia?"]
+  },
+  {
+    "name": "RDW",
+    "aliases": ["rdw", "red cell distribution width", "rdw-cv"],
+    "unit": "%",
+    "low": 11.5,
+    "high": 14.5,
+    "what": "Measures variation in the size of your red blood cells.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with iron deficiency, B12/folate deficiency, or mixed anaemia.",
+    "questions": ["Does the high RDW suggest a nutritional deficiency?"]
   },
   {
     "name": "WBC Count",
-    "aliases": [
-      "wbc count",
-      "wbc",
-      "white blood cell"
-    ],
+    "aliases": ["wbc count", "wbc", "white blood cell count", "white blood cells", "total wbc", "total leucocyte count", "tlc"],
     "unit": "cells/uL",
     "low": 4000,
     "high": 11000,
-    "what": "White blood cells, which help your body fight infection.",
+    "what": "White blood cells help your body fight infection.",
     "whyLow": "Can be associated with viral infections, some medicines, or bone marrow issues.",
     "whyHigh": "Can be associated with infection, inflammation, or stress.",
-    "questions": [
-      "Could a recent infection explain this?",
-      "Do I need a repeat test?"
-    ]
+    "questions": ["Could a recent infection explain this?", "Do I need a repeat test?"]
+  },
+  {
+    "name": "Neutrophils",
+    "aliases": ["neutrophils", "neutrophil count", "neutrophil"],
+    "unit": "%",
+    "low": 40,
+    "high": 70,
+    "what": "Most common type of white blood cell; first responders against bacterial infection.",
+    "whyLow": "Can be associated with viral infections or certain medicines.",
+    "whyHigh": "Can be associated with bacterial infection, inflammation, or stress.",
+    "questions": ["Is this related to an active infection?"]
+  },
+  {
+    "name": "Lymphocytes",
+    "aliases": ["lymphocytes", "lymphocyte count", "lymphocyte"],
+    "unit": "%",
+    "low": 20,
+    "high": 40,
+    "what": "White blood cells important for immune memory and fighting viruses.",
+    "whyLow": "Can be associated with steroid use or certain infections.",
+    "whyHigh": "Can be associated with viral infections or chronic inflammation.",
+    "questions": ["Could a viral illness explain this?"]
+  },
+  {
+    "name": "Monocytes",
+    "aliases": ["monocytes", "monocyte count", "monocyte"],
+    "unit": "%",
+    "low": 2,
+    "high": 8,
+    "what": "White blood cells that help clean up dead cells and fight germs.",
+    "whyLow": "Usually not clinically significant on its own.",
+    "whyHigh": "Can be associated with chronic infections, autoimmune conditions, or recovery from illness.",
+    "questions": ["Should I be concerned about the monocyte level?"]
+  },
+  {
+    "name": "Eosinophils",
+    "aliases": ["eosinophils", "eosinophil count", "eosinophil"],
+    "unit": "%",
+    "low": 1,
+    "high": 4,
+    "what": "White blood cells involved in allergic responses and fighting parasites.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with allergies, asthma, or parasitic infections.",
+    "questions": ["Could allergies or asthma explain this?", "Should I get tested for parasites?"]
+  },
+  {
+    "name": "Basophils",
+    "aliases": ["basophils", "basophil count", "basophil"],
+    "unit": "%",
+    "low": 0,
+    "high": 1,
+    "what": "Least common white blood cells, involved in allergic and inflammatory responses.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with allergic reactions or certain blood disorders.",
+    "questions": ["Is the basophil level something to monitor?"]
   },
   {
     "name": "Platelet Count",
-    "aliases": [
-      "platelet count",
-      "platelets"
-    ],
+    "aliases": ["platelet count", "platelets", "plt"],
     "unit": "cells/uL",
     "low": 150000,
     "high": 410000,
     "what": "Small blood cells that help your blood clot.",
     "whyLow": "Can be associated with infections, certain medicines, or low vitamin levels.",
     "whyHigh": "Can be associated with inflammation, iron deficiency, or infection.",
-    "questions": [
-      "Should this be rechecked?",
-      "Do my medicines affect platelets?"
-    ]
+    "questions": ["Should this be rechecked?", "Do my medicines affect platelets?"]
+  },
+  {
+    "name": "MPV",
+    "aliases": ["mpv", "mean platelet volume"],
+    "unit": "fL",
+    "low": 7.5,
+    "high": 11.5,
+    "what": "Average size of your platelets; larger platelets are younger and more active.",
+    "whyLow": "Can be associated with bone marrow issues.",
+    "whyHigh": "Can be associated with platelet destruction or increased production.",
+    "questions": ["Does the MPV help explain my platelet count?"]
+  },
+  {
+    "name": "ESR",
+    "aliases": ["esr", "erythrocyte sedimentation rate", "sed rate"],
+    "unit": "mm/hr",
+    "low": 0,
+    "high": 20,
+    "what": "A general marker of inflammation in the body.",
+    "whyLow": "Usually not a concern.",
+    "whyHigh": "Can be associated with infection, autoimmune disease, or inflammation.",
+    "questions": ["What could be causing inflammation?", "Do I need a CRP test as well?"]
   },
   {
     "name": "Fasting Glucose",
-    "aliases": [
-      "fasting glucose",
-      "fasting blood sugar",
-      "fbs"
-    ],
+    "aliases": ["fasting glucose", "fasting blood sugar", "fbs", "fasting blood glucose", "glucose fasting", "glucose, fasting"],
     "unit": "mg/dL",
     "low": 70,
     "high": 99,
     "what": "Sugar level in your blood after fasting.",
     "whyLow": "Can happen with long gaps between meals or certain medicines.",
     "whyHigh": "Can be associated with insulin resistance or diabetes risk.",
-    "questions": [
-      "Do I need an HbA1c test to confirm this?",
-      "What lifestyle changes would help?"
-    ]
+    "questions": ["Do I need an HbA1c test to confirm this?", "What lifestyle changes would help?"]
+  },
+  {
+    "name": "Post Prandial Glucose",
+    "aliases": ["post prandial glucose", "pp glucose", "ppbs", "pp blood sugar", "glucose pp", "glucose post prandial"],
+    "unit": "mg/dL",
+    "low": 70,
+    "high": 140,
+    "what": "Blood sugar level measured 2 hours after a meal.",
+    "whyLow": "Can be associated with reactive hypoglycemia.",
+    "whyHigh": "Can be associated with impaired glucose tolerance or diabetes risk.",
+    "questions": ["Does this confirm a diabetes risk along with my fasting glucose?"]
   },
   {
     "name": "HbA1c",
-    "aliases": [
-      "hba1c",
-      "glycated hemoglobin"
-    ],
+    "aliases": ["hba1c", "glycated hemoglobin", "glycated haemoglobin", "glycosylated hemoglobin", "a1c"],
     "unit": "%",
     "low": 4.0,
     "high": 5.6,
     "what": "Average blood sugar level over the past 2 to 3 months.",
     "whyLow": "Can be seen with some blood conditions or recent blood loss.",
     "whyHigh": "Can be associated with prediabetes or diabetes risk.",
-    "questions": [
-      "What does this mean for my diabetes risk?",
-      "How often should I repeat this test?"
-    ]
+    "questions": ["What does this mean for my diabetes risk?", "How often should I repeat this test?"]
   },
   {
     "name": "Total Cholesterol",
-    "aliases": [
-      "total cholesterol"
-    ],
+    "aliases": ["total cholesterol", "cholesterol total", "cholesterol, total", "serum cholesterol"],
     "unit": "mg/dL",
     "low": 125,
     "high": 200,
     "what": "Overall amount of cholesterol in your blood.",
     "whyLow": "Can be associated with diet, thyroid issues, or liver conditions.",
     "whyHigh": "Can be associated with diet, family history, or low activity.",
-    "questions": [
-      "What is my overall heart risk with these numbers?",
-      "Should I change my diet or exercise first?"
-    ]
+    "questions": ["What is my overall heart risk with these numbers?", "Should I change my diet or exercise first?"]
   },
   {
     "name": "LDL Cholesterol",
-    "aliases": [
-      "ldl cholesterol",
-      "ldl"
-    ],
+    "aliases": ["ldl cholesterol", "ldl", "ldl-c", "ldl direct"],
     "unit": "mg/dL",
     "low": 50,
     "high": 100,
     "what": "Often called 'bad' cholesterol because it can build up in blood vessels.",
     "whyLow": "Usually not a concern, but can be associated with diet or other conditions.",
     "whyHigh": "Can be associated with diet high in saturated fat, family history, or low activity.",
-    "questions": [
-      "Is my LDL level a concern for my age?",
-      "Would diet changes be enough, or do I need further tests?"
-    ]
+    "questions": ["Is my LDL level a concern for my age?", "Would diet changes be enough, or do I need further tests?"]
   },
   {
     "name": "HDL Cholesterol",
-    "aliases": [
-      "hdl cholesterol",
-      "hdl"
-    ],
+    "aliases": ["hdl cholesterol", "hdl", "hdl-c"],
     "unit": "mg/dL",
     "low": 40,
     "high": 60,
     "what": "Often called 'good' cholesterol because it helps clear other cholesterol.",
     "whyLow": "Can be associated with low activity, smoking, or diet.",
     "whyHigh": "Usually not a concern.",
-    "questions": [
-      "How can I raise my HDL naturally?"
-    ]
+    "questions": ["How can I raise my HDL naturally?"]
+  },
+  {
+    "name": "VLDL Cholesterol",
+    "aliases": ["vldl cholesterol", "vldl", "vldl-c"],
+    "unit": "mg/dL",
+    "low": 5,
+    "high": 40,
+    "what": "A type of cholesterol that carries triglycerides in the blood.",
+    "whyLow": "Usually not a concern.",
+    "whyHigh": "Can be associated with high triglycerides, obesity, or metabolic syndrome.",
+    "questions": ["Is my VLDL related to my triglyceride level?"]
   },
   {
     "name": "Triglycerides",
-    "aliases": [
-      "triglycerides"
-    ],
+    "aliases": ["triglycerides", "triglyceride"],
     "unit": "mg/dL",
     "low": 50,
     "high": 150,
     "what": "A type of fat in your blood, influenced by diet and sugar intake.",
     "whyLow": "Usually not a concern.",
     "whyHigh": "Can be associated with sugary or fatty foods, alcohol, or blood sugar issues.",
-    "questions": [
-      "Could my diet or alcohol intake explain this?"
-    ]
+    "questions": ["Could my diet or alcohol intake explain this?"]
   },
   {
-    "name": "TSH",
-    "aliases": [
-      "tsh",
-      "thyroid stimulating hormone"
-    ],
-    "unit": "uIU/mL",
-    "low": 0.4,
-    "high": 4.0,
-    "what": "Hormone that tells your thyroid gland how much hormone to make.",
-    "whyLow": "Can be associated with an overactive thyroid.",
-    "whyHigh": "Can be associated with an underactive thyroid.",
-    "questions": [
-      "Do I need T3 and T4 tests as well?"
-    ]
+    "name": "Total Bilirubin",
+    "aliases": ["total bilirubin", "bilirubin total", "bilirubin, total", "serum bilirubin"],
+    "unit": "mg/dL",
+    "low": 0.1,
+    "high": 1.2,
+    "what": "Yellow pigment made when red blood cells break down; processed by the liver.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with liver disease, bile duct obstruction, or conditions like Gilbert's syndrome.",
+    "questions": ["Could this be Gilbert's syndrome?", "Do I need a liver function panel?"]
   },
   {
-    "name": "Vitamin D",
-    "aliases": [
-      "vitamin d"
-    ],
-    "unit": "ng/mL",
-    "low": 30,
-    "high": 100,
-    "what": "Vitamin that supports bones, muscles, and immunity.",
-    "whyLow": "Can be associated with low sun exposure, diet, or absorption issues.",
-    "whyHigh": "Usually linked to high-dose supplements.",
-    "questions": [
-      "Do I need a supplement, and what dose is right for me?",
-      "How long before I should retest?"
-    ]
+    "name": "Direct Bilirubin",
+    "aliases": ["direct bilirubin", "bilirubin direct", "conjugated bilirubin"],
+    "unit": "mg/dL",
+    "low": 0.0,
+    "high": 0.3,
+    "what": "Bilirubin that has been processed by the liver.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with liver disease or bile duct blockage.",
+    "questions": ["Does this indicate a liver or gallbladder issue?"]
   },
   {
-    "name": "Vitamin B12",
-    "aliases": [
-      "vitamin b12",
-      "b12"
-    ],
-    "unit": "pg/mL",
-    "low": 200,
-    "high": 900,
-    "what": "Vitamin needed for nerves and for making red blood cells.",
-    "whyLow": "Can be associated with diet (especially vegetarian), or absorption issues.",
-    "whyHigh": "Usually linked to supplements.",
-    "questions": [
-      "Should I take a B12 supplement?"
-    ]
+    "name": "Indirect Bilirubin",
+    "aliases": ["indirect bilirubin", "bilirubin indirect", "unconjugated bilirubin"],
+    "unit": "mg/dL",
+    "low": 0.1,
+    "high": 1.0,
+    "what": "Bilirubin that has not yet been processed by the liver.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with increased red blood cell breakdown (hemolysis) or Gilbert's syndrome.",
+    "questions": ["Is this related to my other bilirubin results?"]
+  },
+  {
+    "name": "SGOT / AST",
+    "aliases": ["sgot", "ast", "aspartate aminotransferase", "aspartate transaminase", "sgot/ast", "ast/sgot"],
+    "unit": "U/L",
+    "low": 0,
+    "high": 40,
+    "what": "Enzyme found in the liver and heart; helps assess liver health.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with liver injury, alcohol use, medicines, or heart conditions.",
+    "questions": ["Could my medications be causing this?", "Should I get a full liver panel?"]
+  },
+  {
+    "name": "SGPT / ALT",
+    "aliases": ["sgpt", "alt", "alanine aminotransferase", "alanine transaminase", "sgpt/alt", "alt/sgpt"],
+    "unit": "U/L",
+    "low": 0,
+    "high": 40,
+    "what": "Enzyme mainly found in the liver; a key marker for liver damage.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with liver inflammation, fatty liver, or medicines.",
+    "questions": ["Do I have fatty liver disease?", "Should I avoid certain medications or alcohol?"]
+  },
+  {
+    "name": "ALP",
+    "aliases": ["alp", "alkaline phosphatase"],
+    "unit": "U/L",
+    "low": 44,
+    "high": 147,
+    "what": "Enzyme found in the liver and bones; helps assess liver and bone health.",
+    "whyLow": "Can be associated with malnutrition or certain rare conditions.",
+    "whyHigh": "Can be associated with liver disease, bile duct obstruction, or bone disorders.",
+    "questions": ["Is this a liver or bone issue?", "Do I need further imaging or tests?"]
+  },
+  {
+    "name": "GGT",
+    "aliases": ["ggt", "gamma gt", "gamma glutamyl transferase", "gamma-glutamyl transpeptidase"],
+    "unit": "U/L",
+    "low": 0,
+    "high": 45,
+    "what": "Enzyme found in the liver; very sensitive to alcohol or bile duct problems.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with alcohol use, liver disease, or bile duct issues.",
+    "questions": ["Is this related to alcohol intake?", "Should I reduce alcohol consumption?"]
+  },
+  {
+    "name": "Total Protein",
+    "aliases": ["total protein", "protein total", "serum protein"],
+    "unit": "g/dL",
+    "low": 6.0,
+    "high": 8.3,
+    "what": "Combined measure of albumin and globulin in the blood.",
+    "whyLow": "Can be associated with liver disease, malnutrition, or kidney problems.",
+    "whyHigh": "Can be associated with chronic infection, inflammation, or liver disease.",
+    "questions": ["Should I look at my albumin and globulin individually?"]
+  },
+  {
+    "name": "Albumin",
+    "aliases": ["albumin", "serum albumin"],
+    "unit": "g/dL",
+    "low": 3.5,
+    "high": 5.5,
+    "what": "Protein made by the liver; keeps fluid in your blood vessels and carries substances.",
+    "whyLow": "Can be associated with liver disease, malnutrition, or kidney disease.",
+    "whyHigh": "Can be associated with dehydration.",
+    "questions": ["Is my liver or kidney function a concern?"]
+  },
+  {
+    "name": "Globulin",
+    "aliases": ["globulin", "serum globulin"],
+    "unit": "g/dL",
+    "low": 2.0,
+    "high": 3.5,
+    "what": "Group of proteins in the blood including antibodies.",
+    "whyLow": "Can be associated with liver disease or immune deficiency.",
+    "whyHigh": "Can be associated with chronic infection, inflammation, or autoimmune disease.",
+    "questions": ["Should I get an immunoglobulin panel?"]
+  },
+  {
+    "name": "A/G Ratio",
+    "aliases": ["a/g ratio", "a:g ratio", "albumin/globulin ratio", "albumin globulin ratio"],
+    "unit": "",
+    "low": 1.0,
+    "high": 2.5,
+    "what": "Ratio of albumin to globulin; helps evaluate liver and immune function.",
+    "whyLow": "Can be associated with liver disease, kidney disease, or overproduction of globulin.",
+    "whyHigh": "Usually not a concern.",
+    "questions": ["What does the A/G ratio tell us along with my other liver tests?"]
+  },
+  {
+    "name": "Urea / BUN",
+    "aliases": ["urea", "bun", "blood urea nitrogen", "blood urea"],
+    "unit": "mg/dL",
+    "low": 7,
+    "high": 20,
+    "what": "Waste product from protein digestion, filtered by the kidneys.",
+    "whyLow": "Can be associated with low protein diet or liver disease.",
+    "whyHigh": "Can be associated with dehydration, high protein diet, or kidney issues.",
+    "questions": ["Does this indicate a kidney problem?", "Should I adjust my protein intake?"]
   },
   {
     "name": "Creatinine",
-    "aliases": [
-      "creatinine"
-    ],
+    "aliases": ["creatinine", "serum creatinine"],
     "unit": "mg/dL",
     "low": 0.7,
     "high": 1.3,
     "what": "Waste product filtered by the kidneys, used to check kidney function.",
     "whyLow": "Can be associated with low muscle mass.",
     "whyHigh": "Can be associated with dehydration, heavy exercise, or reduced kidney function.",
-    "questions": [
-      "Do I need a repeat or a kidney function panel?"
-    ]
+    "questions": ["Do I need a repeat or a kidney function panel?"]
+  },
+  {
+    "name": "Uric Acid",
+    "aliases": ["uric acid", "serum uric acid"],
+    "unit": "mg/dL",
+    "low": 3.5,
+    "high": 7.2,
+    "what": "Waste product from breaking down purines found in certain foods.",
+    "whyLow": "Can be associated with certain liver or kidney conditions.",
+    "whyHigh": "Can be associated with gout, kidney stones, or high-purine diet.",
+    "questions": ["Am I at risk for gout?", "Should I change my diet?"]
+  },
+  {
+    "name": "Calcium",
+    "aliases": ["calcium", "serum calcium", "total calcium"],
+    "unit": "mg/dL",
+    "low": 8.5,
+    "high": 10.5,
+    "what": "Mineral essential for bones, muscles, nerves, and heart function.",
+    "whyLow": "Can be associated with vitamin D deficiency, parathyroid issues, or malnutrition.",
+    "whyHigh": "Can be associated with parathyroid issues, excess vitamin D, or certain cancers.",
+    "questions": ["Should I get my vitamin D and parathyroid levels checked?"]
+  },
+  {
+    "name": "Phosphorus",
+    "aliases": ["phosphorus", "phosphate", "serum phosphorus", "inorganic phosphorus"],
+    "unit": "mg/dL",
+    "low": 2.5,
+    "high": 4.5,
+    "what": "Mineral that works with calcium for strong bones and teeth.",
+    "whyLow": "Can be associated with vitamin D deficiency, malnutrition, or antacid use.",
+    "whyHigh": "Can be associated with kidney disease or excess vitamin D.",
+    "questions": ["Is my phosphorus related to my calcium or vitamin D levels?"]
+  },
+  {
+    "name": "Sodium",
+    "aliases": ["sodium", "serum sodium", "na+"],
+    "unit": "mEq/L",
+    "low": 136,
+    "high": 145,
+    "what": "Electrolyte that helps control fluid balance, nerve function, and muscle contraction.",
+    "whyLow": "Can be associated with excess water intake, certain medicines, or hormonal issues.",
+    "whyHigh": "Can be associated with dehydration or excess salt intake.",
+    "questions": ["Could my fluid intake or medications explain this?"]
+  },
+  {
+    "name": "Potassium",
+    "aliases": ["potassium", "serum potassium", "k+"],
+    "unit": "mEq/L",
+    "low": 3.5,
+    "high": 5.0,
+    "what": "Electrolyte vital for heart rhythm and muscle function.",
+    "whyLow": "Can be associated with certain medicines (diuretics), vomiting, or diarrhea.",
+    "whyHigh": "Can be associated with kidney disease, certain medicines, or hemolyzed blood sample.",
+    "questions": ["Could my medications be affecting my potassium?"]
+  },
+  {
+    "name": "Chloride",
+    "aliases": ["chloride", "serum chloride", "cl-"],
+    "unit": "mEq/L",
+    "low": 98,
+    "high": 106,
+    "what": "Electrolyte that helps maintain fluid balance and acid-base balance.",
+    "whyLow": "Can be associated with prolonged vomiting or certain kidney conditions.",
+    "whyHigh": "Can be associated with dehydration or kidney disease.",
+    "questions": ["Is my chloride level related to my sodium result?"]
+  },
+  {
+    "name": "Iron",
+    "aliases": ["iron", "serum iron"],
+    "unit": "ug/dL",
+    "low": 60,
+    "high": 170,
+    "what": "Mineral essential for making hemoglobin and carrying oxygen in the blood.",
+    "whyLow": "Can be associated with iron deficiency anaemia, poor diet, or blood loss.",
+    "whyHigh": "Can be associated with iron overload, liver disease, or excessive supplements.",
+    "questions": ["Should I get a ferritin and TIBC test?"]
+  },
+  {
+    "name": "TIBC",
+    "aliases": ["tibc", "total iron binding capacity", "total iron-binding capacity"],
+    "unit": "ug/dL",
+    "low": 250,
+    "high": 370,
+    "what": "Measures the blood's capacity to bind iron with transferrin protein.",
+    "whyLow": "Can be associated with iron overload, liver disease, or malnutrition.",
+    "whyHigh": "Can be associated with iron deficiency anaemia.",
+    "questions": ["Does this confirm iron deficiency along with my iron level?"]
+  },
+  {
+    "name": "Ferritin",
+    "aliases": ["ferritin", "serum ferritin"],
+    "unit": "ng/mL",
+    "low": 12,
+    "high": 300,
+    "what": "Protein that stores iron in the body; reflects total iron reserves.",
+    "whyLow": "Can be associated with iron deficiency, even before anaemia appears.",
+    "whyHigh": "Can be associated with inflammation, infection, liver disease, or iron overload.",
+    "questions": ["Do I need iron supplements?", "Could inflammation explain the high ferritin?"]
+  },
+  {
+    "name": "TSH",
+    "aliases": ["tsh", "thyroid stimulating hormone"],
+    "unit": "uIU/mL",
+    "low": 0.4,
+    "high": 4.0,
+    "what": "Hormone that tells your thyroid gland how much hormone to make.",
+    "whyLow": "Can be associated with an overactive thyroid (hyperthyroidism).",
+    "whyHigh": "Can be associated with an underactive thyroid (hypothyroidism).",
+    "questions": ["Do I need T3 and T4 tests as well?"]
+  },
+  {
+    "name": "T3",
+    "aliases": ["t3", "total t3", "triiodothyronine"],
+    "unit": "ng/dL",
+    "low": 80,
+    "high": 200,
+    "what": "Active thyroid hormone that regulates metabolism, energy, and body temperature.",
+    "whyLow": "Can be associated with hypothyroidism or severe illness.",
+    "whyHigh": "Can be associated with hyperthyroidism.",
+    "questions": ["Should I see an endocrinologist?"]
+  },
+  {
+    "name": "T4",
+    "aliases": ["t4", "total t4", "thyroxine"],
+    "unit": "ug/dL",
+    "low": 4.5,
+    "high": 12.0,
+    "what": "Main thyroid hormone; gets converted to the active T3 form.",
+    "whyLow": "Can be associated with hypothyroidism.",
+    "whyHigh": "Can be associated with hyperthyroidism or excess thyroid medication.",
+    "questions": ["Does the T4 result match my TSH level?"]
+  },
+  {
+    "name": "Free T3",
+    "aliases": ["free t3", "ft3"],
+    "unit": "pg/mL",
+    "low": 2.0,
+    "high": 4.4,
+    "what": "Unbound (active) form of the T3 thyroid hormone.",
+    "whyLow": "Can be associated with hypothyroidism or non-thyroidal illness.",
+    "whyHigh": "Can be associated with hyperthyroidism.",
+    "questions": ["How does this compare with my TSH?"]
+  },
+  {
+    "name": "Free T4",
+    "aliases": ["free t4", "ft4"],
+    "unit": "ng/dL",
+    "low": 0.8,
+    "high": 1.8,
+    "what": "Unbound (active) form of the T4 thyroid hormone.",
+    "whyLow": "Can be associated with hypothyroidism.",
+    "whyHigh": "Can be associated with hyperthyroidism or over-medication.",
+    "questions": ["Should my thyroid medication dose be adjusted?"]
+  },
+  {
+    "name": "Vitamin D",
+    "aliases": ["vitamin d", "25-hydroxy vitamin d", "25-oh vitamin d", "vit d", "vitamin d total"],
+    "unit": "ng/mL",
+    "low": 30,
+    "high": 100,
+    "what": "Vitamin that supports bones, muscles, and immunity.",
+    "whyLow": "Can be associated with low sun exposure, diet, or absorption issues.",
+    "whyHigh": "Usually linked to high-dose supplements.",
+    "questions": ["Do I need a supplement, and what dose is right for me?", "How long before I should retest?"]
+  },
+  {
+    "name": "Vitamin B12",
+    "aliases": ["vitamin b12", "b12", "cyanocobalamin"],
+    "unit": "pg/mL",
+    "low": 200,
+    "high": 900,
+    "what": "Vitamin needed for nerves and for making red blood cells.",
+    "whyLow": "Can be associated with diet (especially vegetarian), or absorption issues.",
+    "whyHigh": "Usually linked to supplements.",
+    "questions": ["Should I take a B12 supplement?"]
+  },
+  {
+    "name": "Folate",
+    "aliases": ["folate", "folic acid", "serum folate", "vitamin b9"],
+    "unit": "ng/mL",
+    "low": 3.0,
+    "high": 17.0,
+    "what": "B vitamin essential for cell growth and making DNA; important in pregnancy.",
+    "whyLow": "Can be associated with poor diet, alcohol use, or malabsorption.",
+    "whyHigh": "Usually linked to supplements.",
+    "questions": ["Should I take a folic acid supplement?"]
+  },
+  {
+    "name": "CRP",
+    "aliases": ["crp", "c-reactive protein", "c reactive protein", "hs-crp", "hs crp"],
+    "unit": "mg/L",
+    "low": 0,
+    "high": 5,
+    "what": "Protein that rises when there is inflammation or infection in the body.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with infection, autoimmune conditions, or cardiovascular risk.",
+    "questions": ["What could be causing the inflammation?", "Do I need further evaluation?"]
+  },
+  {
+    "name": "HBsAg",
+    "aliases": ["hbsag", "hepatitis b surface antigen", "hbs antigen"],
+    "unit": "",
+    "low": 0,
+    "high": 1,
+    "what": "Screening test for Hepatitis B virus infection.",
+    "whyLow": "A negative/non-reactive result means no current Hepatitis B infection detected.",
+    "whyHigh": "A positive/reactive result may indicate active or chronic Hepatitis B infection.",
+    "questions": ["Do I need Hepatitis B vaccination?", "Should I get further hepatitis testing?"]
+  },
+  {
+    "name": "HIV",
+    "aliases": ["hiv", "hiv antibody", "hiv 1 & 2", "hiv 1&2", "hiv screening"],
+    "unit": "",
+    "low": 0,
+    "high": 1,
+    "what": "Screening test for Human Immunodeficiency Virus.",
+    "whyLow": "A negative/non-reactive result means no HIV antibodies detected.",
+    "whyHigh": "A reactive result needs confirmation with further tests.",
+    "questions": ["Should I get a confirmatory test?"]
+  },
+  {
+    "name": "Urine pH",
+    "aliases": ["urine ph", "ph (urine)", "ph urine"],
+    "unit": "",
+    "low": 4.5,
+    "high": 8.0,
+    "what": "Measures how acidic or alkaline your urine is.",
+    "whyLow": "Can be associated with high-protein diet, dehydration, or metabolic acidosis.",
+    "whyHigh": "Can be associated with urinary tract infections or vegetarian diet.",
+    "questions": ["Is my urine pH related to my diet?"]
+  },
+  {
+    "name": "Urine Specific Gravity",
+    "aliases": ["specific gravity", "urine specific gravity", "sp. gravity"],
+    "unit": "",
+    "low": 1.005,
+    "high": 1.030,
+    "what": "Measures how concentrated your urine is.",
+    "whyLow": "Can be associated with excess water intake or diabetes insipidus.",
+    "whyHigh": "Can be associated with dehydration or heart failure.",
+    "questions": ["Am I drinking enough water?"]
+  },
+  {
+    "name": "Magnesium",
+    "aliases": ["magnesium", "serum magnesium", "mg"],
+    "unit": "mg/dL",
+    "low": 1.7,
+    "high": 2.2,
+    "what": "Mineral important for muscle, nerve, and heart function.",
+    "whyLow": "Can be associated with poor diet, alcohol use, or certain medicines.",
+    "whyHigh": "Can be associated with kidney disease or excess supplementation.",
+    "questions": ["Should I take a magnesium supplement?"]
+  },
+  {
+    "name": "LDH",
+    "aliases": ["ldh", "lactate dehydrogenase"],
+    "unit": "U/L",
+    "low": 140,
+    "high": 280,
+    "what": "Enzyme found in many tissues; released when cells are damaged.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with tissue damage, haemolysis, liver disease, or certain cancers.",
+    "questions": ["What could be causing the elevated LDH?"]
+  },
+  {
+    "name": "CPK / CK",
+    "aliases": ["cpk", "ck", "creatine kinase", "creatine phosphokinase"],
+    "unit": "U/L",
+    "low": 22,
+    "high": 198,
+    "what": "Enzyme found in muscles and heart; rises with muscle damage.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with intense exercise, muscle injury, or heart conditions.",
+    "questions": ["Could heavy exercise explain this?", "Do I need a heart-specific CK-MB test?"]
+  },
+  {
+    "name": "Amylase",
+    "aliases": ["amylase", "serum amylase"],
+    "unit": "U/L",
+    "low": 28,
+    "high": 100,
+    "what": "Enzyme that helps digest carbohydrates; mainly from the pancreas and salivary glands.",
+    "whyLow": "Can be associated with chronic pancreatitis or cystic fibrosis.",
+    "whyHigh": "Can be associated with acute pancreatitis, salivary gland issues, or kidney disease.",
+    "questions": ["Do I need a lipase test as well?"]
+  },
+  {
+    "name": "Lipase",
+    "aliases": ["lipase", "serum lipase"],
+    "unit": "U/L",
+    "low": 0,
+    "high": 60,
+    "what": "Enzyme that helps digest fats; mainly from the pancreas.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with pancreatitis, gallstones, or kidney disease.",
+    "questions": ["Should I get pancreas imaging?"]
+  },
+  {
+    "name": "Reticulocyte Count",
+    "aliases": ["reticulocyte count", "reticulocyte", "retic count"],
+    "unit": "%",
+    "low": 0.5,
+    "high": 2.5,
+    "what": "Young red blood cells just released from the bone marrow.",
+    "whyLow": "Can be associated with bone marrow suppression or aplastic anaemia.",
+    "whyHigh": "Can be associated with active blood loss, haemolysis, or recovery from anaemia.",
+    "questions": ["Does this help explain my anaemia?"]
+  },
+  {
+    "name": "Prothrombin Time",
+    "aliases": ["prothrombin time", "pt", "pt-inr"],
+    "unit": "seconds",
+    "low": 11,
+    "high": 13.5,
+    "what": "Measures how long it takes your blood to clot; used to monitor blood thinners.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with liver disease, vitamin K deficiency, or blood thinner therapy.",
+    "questions": ["Does my medication need dose adjustment?"]
+  },
+  {
+    "name": "INR",
+    "aliases": ["inr", "international normalized ratio"],
+    "unit": "",
+    "low": 0.8,
+    "high": 1.1,
+    "what": "Standardised measure of blood clotting time; used to monitor warfarin therapy.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with liver disease or blood thinner therapy; target is often 2–3 on warfarin.",
+    "questions": ["Is my warfarin dose correct?"]
+  },
+  {
+    "name": "aPTT",
+    "aliases": ["aptt", "activated partial thromboplastin time", "ptt"],
+    "unit": "seconds",
+    "low": 25,
+    "high": 35,
+    "what": "Another clotting time test; assesses the intrinsic clotting pathway.",
+    "whyLow": "Usually not clinically significant.",
+    "whyHigh": "Can be associated with clotting factor deficiency or heparin therapy.",
+    "questions": ["Is a bleeding disorder possible?"]
+  },
+  {
+    "name": "GFR / eGFR",
+    "aliases": ["gfr", "egfr", "estimated gfr", "glomerular filtration rate"],
+    "unit": "mL/min",
+    "low": 90,
+    "high": 120,
+    "what": "Estimates how well your kidneys filter waste from the blood.",
+    "whyLow": "Can be associated with reduced kidney function (chronic kidney disease).",
+    "whyHigh": "Usually not a concern.",
+    "questions": ["What stage of kidney function is this?", "Do I need to see a nephrologist?"]
+  },
+  {
+    "name": "Bicarbonate",
+    "aliases": ["bicarbonate", "hco3", "serum bicarbonate", "co2 content"],
+    "unit": "mEq/L",
+    "low": 22,
+    "high": 29,
+    "what": "Helps maintain the acid-base balance of the blood.",
+    "whyLow": "Can be associated with metabolic acidosis, kidney disease, or diarrhea.",
+    "whyHigh": "Can be associated with vomiting, dehydration, or certain lung conditions.",
+    "questions": ["Is my acid-base balance a concern?"]
   }
 ]

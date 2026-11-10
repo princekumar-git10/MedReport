@@ -1,0 +1,208 @@
+[
+  {
+    "id": "bill_cholecystectomy",
+    "procedure": "Laparoscopic Cholecystectomy (Gallbladder Surgery)",
+    "hospital": "Metro Super Specialty Hospital",
+    "patient": "Patient #MED-8492",
+    "date": "Oct 2026",
+    "insuranceClaimed": 115000,
+    "insuranceApproved": 92000,
+    "outOfPocket": 36500,
+    "estimatedTotal": 95000,
+    "actualTotal": 128500,
+    "variance": 33500,
+    "variancePct": 35.3,
+    "lineItems": [
+      {
+        "category": "Room Rent & Nursing",
+        "estimated": 18000,
+        "actual": 27000,
+        "variance": 9000,
+        "explanation": "Quoted for 2 days in Twin Sharing @ ₹9,000/day. Patient was discharged late on Day 3 due to mild post-op nausea, triggering a full 3rd day room charge.",
+        "flag": "warn",
+        "flagText": "Late discharge triggered 1 extra full day room charge"
+      },
+      {
+        "category": "Surgeon & Anesthetist Fees",
+        "estimated": 35000,
+        "actual": 35000,
+        "variance": 0,
+        "explanation": "Primary surgeon & specialist anesthetist charges matched initial written estimate exactly.",
+        "flag": "ok",
+        "flagText": "Matches pre-admission quotation"
+      },
+      {
+        "category": "OT & Equipment Charges",
+        "estimated": 22000,
+        "actual": 26500,
+        "variance": 4500,
+        "explanation": "Quoted basic laparoscopic tower fee. Billed ₹4,500 extra for 'Harmonic Scalpel Disposable Blade' which was not specified in the pre-admission quote.",
+        "flag": "warn",
+        "flagText": "Unlisted Harmonic energy blade fee added"
+      },
+      {
+        "category": "Pathology & Investigations",
+        "estimated": 6000,
+        "actual": 8200,
+        "variance": 2200,
+        "explanation": "Extra postoperative Electrolyte (Na+/K+) panel and emergency repeat Hemoglobin ordered due to mild BP fluctuation.",
+        "flag": "info",
+        "flagText": "Clinically justified repeat labs"
+      },
+      {
+        "category": "Pharmacy & Surgical Consumables",
+        "estimated": 14000,
+        "actual": 24300,
+        "variance": 10300,
+        "explanation": "Estimated ₹14,000. Billed ₹24,300. Markups found on surgical drapes, IV cannulas, and surgical gloves billed at hospital institutional MRP (65% variance).",
+        "flag": "critical",
+        "flagText": "High consumable markup — contestable with billing desk"
+      },
+      {
+        "category": "Administrative & Surcharges (Unlisted)",
+        "estimated": 0,
+        "actual": 7500,
+        "variance": 7500,
+        "explanation": "Billed: ₹2,500 Biomedical Waste Disposal, ₹2,000 Hospital Registration/Admin fee, and ₹3,000 Medical Records & Sanitization. None were disclosed on the initial quotation.",
+        "flag": "critical",
+        "flagText": "Hidden surcharge not disclosed prior to admission"
+      }
+    ],
+    "negotiationTips": [
+      "Ask the hospital billing desk to waive the ₹7,500 unlisted administrative & biomedical waste charges, as they were not disclosed in the pre-authorization estimate.",
+      "Inquire why the 3rd day room rent was billed as a full 24-hour rate rather than a half-day checkout rate.",
+      "Request an itemized pharmacy bill to check if consumables were billed above retail MRP."
+    ]
+  },
+  {
+    "id": "bill_angioplasty",
+    "procedure": "Coronary Angioplasty (1 DES Stent)",
+    "hospital": "Apex Heart & Vascular Institute",
+    "patient": "Patient #CARD-2041",
+    "date": "Sep 2026",
+    "insuranceClaimed": 220000,
+    "insuranceApproved": 195000,
+    "outOfPocket": 49000,
+    "estimatedTotal": 205000,
+    "actualTotal": 244000,
+    "variance": 39000,
+    "variancePct": 19.0,
+    "lineItems": [
+      {
+        "category": "Drug-Eluting Stent (DES)",
+        "estimated": 30000,
+        "actual": 30000,
+        "variance": 0,
+        "explanation": "Capped strictly under NPPA (National Pharmaceutical Pricing Authority) government ceiling price.",
+        "flag": "ok",
+        "flagText": "Standard NPPA price compliance"
+      },
+      {
+        "category": "Cath Lab & Operator Charges",
+        "estimated": 65000,
+        "actual": 68000,
+        "variance": 3000,
+        "explanation": "Additional ₹3,000 billed for femoral compression closure device.",
+        "flag": "info",
+        "flagText": "Femoral vascular closure device"
+      },
+      {
+        "category": "ICU & Telemetry Monitoring (24h)",
+        "estimated": 28000,
+        "actual": 38000,
+        "variance": 10000,
+        "explanation": "Patient kept in Cardiac ICU for 32 hours instead of estimated 24 hours for extended rhythm monitoring.",
+        "flag": "warn",
+        "flagText": "8 extra hours CCU stay billed as 2nd full day"
+      },
+      {
+        "category": "Doctor Consultation & Rounds",
+        "estimated": 25000,
+        "actual": 31000,
+        "variance": 6000,
+        "explanation": "Cross-consultation added: Nephrologist called to review borderline Creatinine (1.4 mg/dL) following contrast dye injection.",
+        "flag": "info",
+        "flagText": "Specialist contrast-nephropathy clearance"
+      },
+      {
+        "category": "Medications & Injections",
+        "estimated": 35000,
+        "actual": 49500,
+        "variance": 14500,
+        "explanation": "High-dose IV Glycoprotein IIb/IIIa inhibitor (Tirofiban) and disposable guide catheter packs billed above baseline estimate.",
+        "flag": "warn",
+        "flagText": "Specialized anticoagulant injection added"
+      },
+      {
+        "category": "Hospital Overhead & Registration",
+        "estimated": 22000,
+        "actual": 27500,
+        "variance": 5500,
+        "explanation": "Sterilization kit, medical record processing, and documentation fees.",
+        "flag": "warn",
+        "flagText": "Documentation overhead markups"
+      }
+    ],
+    "negotiationTips": [
+      "Submit the Nephrologist cross-consultation report to insurance to claim the additional ₹6,000 under medically necessary complications.",
+      "Check if your policy covers the vascular closure device under surgical consumables."
+    ]
+  },
+  {
+    "id": "bill_dengue",
+    "procedure": "Inpatient Medical Management (Dengue Fever with Thrombocytopenia)",
+    "hospital": "City Care Multi-Specialty",
+    "patient": "Patient #IP-5910",
+    "date": "Aug 2026",
+    "insuranceClaimed": 48000,
+    "insuranceApproved": 39500,
+    "outOfPocket": 18200,
+    "estimatedTotal": 42000,
+    "actualTotal": 57700,
+    "variance": 15700,
+    "variancePct": 37.4,
+    "lineItems": [
+      {
+        "category": "Room Rent (Semi-Private 3 Days)",
+        "estimated": 15000,
+        "actual": 20000,
+        "variance": 5000,
+        "explanation": "Stay extended by 1 day because platelet count was still recovering (45,000 cells/uL on Day 3).",
+        "flag": "info",
+        "flagText": "Clinically indicated stay extension"
+      },
+      {
+        "category": "Frequent Lab Investigations (CBCs)",
+        "estimated": 6000,
+        "actual": 11200,
+        "variance": 5200,
+        "explanation": "Serial CBC performed every 12 hours (6 times total) to monitor rapid platelet fluctuation, plus Dengue NS1 & Liver profile.",
+        "flag": "info",
+        "flagText": "Serial platelet monitoring (6 tests)"
+      },
+      {
+        "category": "IV Fluids & Pharmacy",
+        "estimated": 12000,
+        "actual": 14500,
+        "variance": 2500,
+        "explanation": "Continuous IV crystalloids, antiemetics, paracetamol infusions, and supportive electrolytes.",
+        "flag": "ok",
+        "flagText": "Within reasonable clinical variance"
+      },
+      {
+        "category": "Nursing & Infection Control Surcharges",
+        "estimated": 9000,
+        "actual": 12000,
+        "variance": 3000,
+        "explanation": "Specialized barrier nursing and vector-borne isolation protocol fees added.",
+        "flag": "warn",
+        "flagText": "Vector isolation fee not in pre-estimate"
+      }
+    ],
+    "negotiationTips": [
+      "Insurance often deductions serial CBCs as redundant; have the treating physician certify that 12-hourly tests were critical to monitor shock syndrome.",
+      "Ensure the hospital provides pharmacy bills with batch numbers and tax invoices for complete reimbursement."
+    ]
+  }
+]
+

@@ -15,15 +15,23 @@ export function parseLines(lines) {
   for (const line of lines) {
     const lower = line.toLowerCase();
 
-    // the alias must match as a whole word, so "hb" can't match inside "hba1c"
+    // find the alias anywhere in the line (not just at the start)
     const hit = aliasList.find(({ alias }) => {
-      if (!lower.startsWith(alias)) return false;
-      const next = lower[alias.length];
-      return !next || !/[a-z0-9]/.test(next);
+      const pos = lower.indexOf(alias);
+      if (pos === -1) return false;
+      // character before must be a non-alphanumeric (or start of line)
+      const prev = lower[pos - 1];
+      if (prev && /[a-z0-9]/.test(prev)) return false;
+      // character after must be a non-alphanumeric (or end of line)
+      const next = lower[pos + alias.length];
+      if (next && /[a-z0-9]/.test(next)) return false;
+      return true;
     });
     if (!hit || seen.has(hit.test.name)) continue;
 
-    const rest = line.slice(hit.alias.length);
+    // grab the portion of the line AFTER the alias match
+    const pos = lower.indexOf(hit.alias);
+    const rest = line.slice(pos + hit.alias.length);
     const valueMatch = rest.match(numberRegex);
     if (!valueMatch) continue;
 

@@ -5,8 +5,10 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Login() {
+  const { t, lang, setLang, languages } = useLanguage();
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +17,7 @@ export default function Login() {
 
   const cleanError = (err) =>
     err.message.replace("Firebase: ", "").replace(/\(auth\/.*\)\.?/, "").trim() ||
-    "Something went wrong. Please try again.";
+    t("login.genericError");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,31 +48,44 @@ export default function Login() {
   return (
     <main className="authPage">
       <form className="authCard" onSubmit={handleSubmit}>
-        <h1>Medical Report Explainer</h1>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "8px" }}>
+          <select
+            className="lang-select-pill"
+            value={lang}
+            onChange={(e) => setLang(e.target.value)}
+            aria-label={t("nav.selectLang")}
+          >
+            {languages.map((l) => (
+              <option key={l.code} value={l.code}>
+                {l.native}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <h1>{t("login.title")}</h1>
         <p className="tag">
-          {isSignup
-            ? "Create an account to get plain-language explanations of your lab reports."
-            : "Log in to continue to your reports."}
+          {isSignup ? t("login.tagSignup") : t("login.tagLogin")}
         </p>
 
-        <label className="sr-only" htmlFor="email">Email</label>
+        <label className="sr-only" htmlFor="email">{t("login.email")}</label>
         <input
           id="email"
           className="authInput"
           type="email"
-          placeholder="Email address"
+          placeholder={t("login.emailPlaceholder")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
           required
         />
 
-        <label className="sr-only" htmlFor="password">Password</label>
+        <label className="sr-only" htmlFor="password">{t("login.password")}</label>
         <input
           id="password"
           className="authInput"
           type="password"
-          placeholder="Password (min 6 characters)"
+          placeholder={t("login.passwordPlaceholder")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete={isSignup ? "new-password" : "current-password"}
@@ -81,24 +96,24 @@ export default function Login() {
         {error && <p className="error" role="alert">{error}</p>}
 
         <button type="submit" className="authPrimary" disabled={loading}>
-          {loading ? "Please wait…" : isSignup ? "Create account" : "Log in"}
+          {loading ? t("common.pleaseWait") : isSignup ? t("login.createAccount") : t("login.loginBtn")}
         </button>
 
-        <div className="authDivider"><span>or</span></div>
+        <div className="authDivider"><span>{t("common.or")}</span></div>
 
         <button type="button" className="sampleBtn authGoogle" onClick={handleGoogle}>
-          Continue with Google
+          {t("login.googleLogin")}
         </button>
 
         <p className="authSwitch">
-          {isSignup ? "Already have an account?" : "New here?"}{" "}
+          {isSignup ? t("login.alreadyAccount") : t("login.newHere")}{" "}
           <button type="button" className="authLink" onClick={() => { setIsSignup(!isSignup); setError(""); }}>
-            {isSignup ? "Log in" : "Sign up"}
+            {isSignup ? t("login.loginLink") : t("login.signupLink")}
           </button>
         </p>
 
         <p className="authNote">
-          Educational information only. Not a diagnosis or medical advice.
+          {t("login.note")}
         </p>
       </form>
     </main>

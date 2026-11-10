@@ -1,33 +1,54 @@
 import { useState } from "react";
+import PulseNav from "./components/PulseNav";
+import MedSyncHome from "./components/MedSyncHome";
 import UploadBox from "./components/UploadBox";
 import ResultCard from "./components/ResultCard";
 import Summary from "./components/Summary";
 import AttentionCard from "./components/AttentionCard";
+import RiskPage from "./components/RiskPage";
+import HealthHubPage from "./components/HealthHubPage";
+import CostHubPage from "./components/CostHubPage";
+import { computeRisk } from "./utils/riskEngine";
 import { extractLines } from "./utils/extractText";
 import { parseLines } from "./utils/parseReport";
 import { analyze } from "./utils/analyze";
+import { saveReportToVault } from "./utils/offlineStorage";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
+import { useLanguage } from "./context/LanguageContext";
 import "./App.css";
 
 export default function App() {
+  const [activePage, setActivePage] = useState("home");
   const [results, setResults] = useState([]);
+  const [activeReportName, setActiveReportName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { t } = useLanguage();
+
+  const handleNavigate = (page) => {
+    setActivePage(page);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
 
   async function handleFile(file) {
     setLoading(true);
     setError("");
     try {
       const lines = await extractLines(file);
-      const parsed = parseLines(lines).map(analyze);
+      const parsed = await Promise.all(parseLines(lines).map(analyze));
       if (parsed.length === 0) {
-        setError("Couldn't find known tests in this PDF. Try a text-based (not scanned) report.");
+        setError(t("report.errNoTests"));
+      } else {
+        const reportName = file.name || t("report.fallbackName");
+        setResults(parsed);
+        setActiveReportName(reportName);
+        saveReportToVault(parsed, reportName);
+        setActivePage("report");
       }
-      setResults(parsed);
     } catch (e) {
       console.error(e);
-      setError("Could not read this PDF.");
+      setError(t("report.errReadPdf"));
     }
     setLoading(false);
   }
@@ -40,53 +61,130 @@ export default function App() {
       if (!res.ok || blob.type.includes("html")) {
         throw new Error("not found");
       }
-      await handleFile(new File([blob], "sample_lab_report.pdf", { type: "application/pdf" }));
+      const file = new File([blob], "sample_lab_report.pdf", { type: "application/pdf" });
+      await handleFile(file);
     } catch (e) {
-      setError("Could not load the sample report. Check that sample_lab_report.pdf is inside the public folder.");
+      setError(t("report.errLoadSample"));
     }
   }
 
   return (
     <div className="app">
-      <header>
-        <div className="user-bar">
-          <span className="avatar" aria-hidden="true">
-            {auth.currentUser?.email?.[0]?.toUpperCase()}
-          </span>
-          <span className="userEmail">{auth.currentUser?.email}</span>
-          <button className="logoutBtn" onClick={() => signOut(auth)}>
-            Logout
-          </button>
-        </div>
-        <h1>Medical Report Explainer</h1>
-        <p className="tag">
-          Upload a lab report and get a plain-language explanation. Your file is read in this browser and is never uploaded.
-        </p>
-      </header>
+      {/* ── Unique ECG Heartbeat Pulse Navbar ── */}
+      <PulseNav
+        activePage={activePage}
+        onNavigate={handleNavigate}
+        userEmail={auth.currentUser?.email}
+        onLogout={() => signOut(auth)}
+        resultsCount={results.length}
+        riskScore={results.length > 0 ? computeRisk(results).score : undefined}
+      />
 
-      <UploadBox onFile={handleFile} loading={loading} loadSample={loadSample} />
-
-      {error && <p className="error" role="alert">{error}</p>}
-
-      {results.length > 0 && (
-        <>
-          <Summary results={results} />
-          <AttentionCard results={results} />
-          {[...results]
-            .sort(
-              (a, b) =>
-                (b.needsAttention - a.needsAttention) ||
-                ((b.status !== "normal") - (a.status !== "normal"))
-            )
-            .map((r) => (
-              <ResultCard key={r.test.name} r={r} />
-            ))}
-        </>
+      {/* ── 1. MedSync AI Home Screen (inspired by user design) ── */}
+      {activePage === "home" && (
+        <main className="page-fade">
+          <MedSyncHome
+            userEmail={auth.currentUser?.email}
+            onNavigate={handleNavigate}
+            results={results}
+          />
+        </main>
       )}
 
-      <footer>
-        Educational information only. Not a diagnosis or medical advice. Please consult your doctor.
-      </footer>
+      {/* ── 2. Diagnostic Report ── */}
+      {activePage === "report" && (
+        <main className="page-fade">
+          <header>
+            <div className="report-header-top">
+              <h1>{t("report.title")}</h1>
+              {activeReportName && (
+                <span className="offline-active-indicator" title={t("report.savedToVault")}>
+                  <span className="rec-dot" />
+                  <span>{t("report.emrPrefix")} {activeReportName}</span>
+                </span>
+              )}
+            </div>
+            <p className="tag">
+              {t("report.tag")}
+            </p>
+          </header>
+
+          <UploadBox onFile={handleFile} loading={loading} loadSample={loadSample} />
+
+          {error && <p className="error" role="alert">{error}</p>}
+
+          {results.length > 0 && (
+            <>
+              {/* Dual Action Telemetry Banner */}
+              <div className="risk-jump-banner">
+                <div>
+                  <strong>{t("report.bannerTitle")}</strong>
+                  <p>{t("report.bannerDesc", { count: results.length })}</p>
+                </div>
+                <div className="banner-btn-group">
+                  <button
+                    className="risk-jump-btn"
+                    onClick={() => handleNavigate("risk")}
+                  >
+                    {t("report.btnDeterioration")}
+                  </button>
+                  <button
+                    className="bot-jump-btn"
+                    onClick={() => handleNavigate("bot")}
+                  >
+                    {t("report.btnAskBot")}
+                  </button>
+                </div>
+              </div>
+
+              <Summary results={results} />
+              <AttentionCard results={results} />
+              {[...results]
+                .sort(
+                  (a, b) =>
+                    (b.needsAttention - a.needsAttention) ||
+                    ((b.status !== "normal") - (a.status !== "normal"))
+                )
+                .map((r) => (
+                  <ResultCard key={r.test.name} r={r} />
+                ))}
+            </>
+          )}
+
+          <footer>
+            {t("common.disclaimer")}
+          </footer>
+        </main>
+      )}
+
+      {/* ── 3. Alerts (Deterioration AI) ── */}
+      {activePage === "risk" && (
+        <main className="page-fade">
+          <RiskPage results={results} onNavigate={handleNavigate} />
+        </main>
+      )}
+
+      {/* ── 4. Hospital Costs ── */}
+      {activePage === "cost" && (
+        <main className="page-fade">
+          <CostHubPage results={results} />
+        </main>
+      )}
+
+      {/* ── Sub-hub fallback (Bot / Library / Vault) ── */}
+      {activePage === "bot" && (
+        <main className="page-fade">
+          <HealthHubPage
+            results={results}
+            onLoadVaultReport={(vaultResults, name) => {
+              setResults(vaultResults);
+              setActiveReportName(name);
+              handleNavigate("report");
+            }}
+            activeReportName={activeReportName}
+          />
+        </main>
+      )}
     </div>
   );
 }

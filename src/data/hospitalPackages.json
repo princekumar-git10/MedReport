@@ -1,0 +1,265 @@
+[
+  {
+    "id": "pkg_angioplasty",
+    "procedure": "Coronary Angioplasty (PTCA + 1 DES Stent)",
+    "category": "Cardiology",
+    "description": "Percutaneous coronary intervention with 1 FDA-approved Drug-Eluting Stent (DES), catheterization, and 2-day hospitalization.",
+    "stayDays": 2,
+    "packages": [
+      {
+        "hospital": "Apollo Hospitals",
+        "city": "Delhi NCR / Chennai",
+        "rating": 4.8,
+        "accreditation": "JCI & NABH",
+        "roomTypes": {
+          "General Sharing": 185000,
+          "Semi-Private": 215000,
+          "Private Deluxe": 255000
+        },
+        "doctorFee": 45000,
+        "investigationsIncluded": ["Pre-op Angiography review", "ECG", "ECHO", "Troponin I", "Post-op Lipid & Renal panel"],
+        "inclusions": ["1 US-FDA Drug Eluting Stent", "OT Charges & Cath Lab", "Anesthesia & Nursing", "Routine ICU (1 day)"],
+        "exclusions": ["Additional stents beyond 1 (₹35,000 - ₹50,000 each)", "Emergency Rotablation or IVUS catheter", "High-cost blood thinners post discharge", "Stay extension beyond 2 days"]
+      },
+      {
+        "hospital": "Max Healthcare",
+        "city": "Delhi NCR",
+        "rating": 4.7,
+        "accreditation": "NABH Accredited",
+        "roomTypes": {
+          "General Sharing": 195000,
+          "Semi-Private": 225000,
+          "Private Deluxe": 270000
+        },
+        "doctorFee": 48000,
+        "investigationsIncluded": ["Cardiac enzymes", "Full CBC & Coagulation (PT-INR)", "Post-procedure ECG monitoring"],
+        "inclusions": ["1 CE/FDA Stent", "Cath Lab & Sheath consumables", "Day 1 Coronary Care Unit (CCU)", "Basic medicines during stay"],
+        "exclusions": ["Specialized bifurcation stents", "FFR / OCT imaging", "Take-home anticoagulants", "Room upgrade charges"]
+      },
+      {
+        "hospital": "Fortis Healthcare",
+        "city": "Mumbai / Bengaluru",
+        "rating": 4.6,
+        "accreditation": "JCI Accredited",
+        "roomTypes": {
+          "General Sharing": 180000,
+          "Semi-Private": 210000,
+          "Private Deluxe": 250000
+        },
+        "doctorFee": 42000,
+        "investigationsIncluded": ["Echocardiogram", "Electrolytes", "BUN & Creatinine", "Blood sugar monitoring"],
+        "inclusions": ["Primary stent implantation", "Intra-op consumables", "Cardiologist visit charges (2 days)", "Post-stent recovery care"],
+        "exclusions": ["Second stent if multiple blockages found", "Pacemaker backup if required", "Cross-consultation with nephrologist"]
+      },
+      {
+        "hospital": "Narayana Health",
+        "city": "Bengaluru / Kolkata",
+        "rating": 4.8,
+        "accreditation": "NABH Accredited",
+        "roomTypes": {
+          "General Sharing": 145000,
+          "Semi-Private": 175000,
+          "Private Deluxe": 205000
+        },
+        "doctorFee": 32000,
+        "investigationsIncluded": ["Pre-procedure panel", "Continuous telemetry", "Cardiac monitoring"],
+        "inclusions": ["1 DES Stent", "Cath lab procedure", "Standard medications", "2 days inpatient stay"],
+        "exclusions": ["Additional stents", "Post-discharge pharmacy", "Specialized imaging catheters"]
+      }
+    ]
+  },
+  {
+    "id": "pkg_knee_replacement",
+    "procedure": "Total Knee Replacement (TKR - Unilateral)",
+    "category": "Orthopedics",
+    "description": "Complete joint arthroplasty using cobalt-chromium / titanium prosthesis with high-flex design and post-op physiotherapy.",
+    "stayDays": 4,
+    "packages": [
+      {
+        "hospital": "Apollo Hospitals",
+        "city": "Delhi NCR / Chennai",
+        "rating": 4.8,
+        "accreditation": "JCI & NABH",
+        "roomTypes": {
+          "General Sharing": 220000,
+          "Semi-Private": 260000,
+          "Private Deluxe": 310000
+        },
+        "doctorFee": 60000,
+        "investigationsIncluded": ["X-Ray (AP/Lateral weight-bearing)", "Pre-anesthetic lab workup", "Blood grouping & crossmatch", "Post-op check X-ray"],
+        "inclusions": ["US FDA Knee Implant", "Operating Room & Laminar Flow Charges", "In-hospital Physiotherapy (4 sessions)", "Epidural / spinal analgesia"],
+        "exclusions": ["Robotic-assisted surgery surcharge (₹45,000 - ₹60,000)", "DVT stockings & walker", "Extended physiotherapy post-discharge", "Blood transfusions if Hb drops below 8.0"]
+      },
+      {
+        "hospital": "Max Healthcare",
+        "city": "Delhi NCR",
+        "rating": 4.7,
+        "accreditation": "NABH Accredited",
+        "roomTypes": {
+          "General Sharing": 235000,
+          "Semi-Private": 275000,
+          "Private Deluxe": 325000
+        },
+        "doctorFee": 65000,
+        "investigationsIncluded": ["Full orthopedic pre-op panel", "Post-surgery radiographs", "Inflammation markers"],
+        "inclusions": ["Imported joint prosthesis", "Bone cement & disposable drapes", "4 days nursing & room stay", "Daily surgeon rounds"],
+        "exclusions": ["Bilateral (both knees) procedure", "Custom patient-matched 3D cutting jigs", "Take-home pain medication"]
+      },
+      {
+        "hospital": "Manipal Hospitals",
+        "city": "Bengaluru / Pune",
+        "rating": 4.6,
+        "accreditation": "NABH Accredited",
+        "roomTypes": {
+          "General Sharing": 210000,
+          "Semi-Private": 250000,
+          "Private Deluxe": 295000
+        },
+        "doctorFee": 55000,
+        "investigationsIncluded": ["Complete metabolic panel", "Cardiac fitness clearance", "Knee radiologic workup"],
+        "inclusions": ["Standard high-flex implant", "OT charges", "Physiotherapist evaluation during stay"],
+        "exclusions": ["Robotic navigation", "Post-discharge rehabilitation kit", "Special antibiotics for allergy patients"]
+      }
+    ]
+  },
+  {
+    "id": "pkg_lap_cholecystectomy",
+    "procedure": "Laparoscopic Gallbladder Removal (Cholecystectomy)",
+    "category": "General & Laparoscopic Surgery",
+    "description": "Minimally invasive keyhole surgery for gallstones with 4 trocars, titanium clips, and fast recovery.",
+    "stayDays": 2,
+    "packages": [
+      {
+        "hospital": "Max Healthcare",
+        "city": "Delhi NCR",
+        "rating": 4.7,
+        "accreditation": "NABH Accredited",
+        "roomTypes": {
+          "General Sharing": 85000,
+          "Semi-Private": 105000,
+          "Private Deluxe": 130000
+        },
+        "doctorFee": 25000,
+        "investigationsIncluded": ["Liver Function Test (LFT)", "Ultrasound Whole Abdomen", "PT-INR & CBC", "Histopathology biopsy of gallbladder"],
+        "inclusions": ["Laparoscopic tower & HD camera charges", "Titanium ligating clips", "Anesthesia medications", "2 days room & nursing"],
+        "exclusions": ["Conversion to open surgery if severe adhesions found (₹20,000)", "ERCP for bile duct stone extraction", "Dietary supplements"]
+      },
+      {
+        "hospital": "Fortis Healthcare",
+        "city": "Mumbai / Delhi NCR",
+        "rating": 4.6,
+        "accreditation": "JCI & NABH",
+        "roomTypes": {
+          "General Sharing": 80000,
+          "Semi-Private": 100000,
+          "Private Deluxe": 125000
+        },
+        "doctorFee": 24000,
+        "investigationsIncluded": ["Abdominal sonography", "Routine pre-op labs", "Specimen biopsy"],
+        "inclusions": ["Laparoscopy consumables", "Day 1-2 standard pharmacy", "Surgeon rounds"],
+        "exclusions": ["Harmonic scalpel / Ligasure extra blade charges", "Stay beyond 2 days", "Home dressing kit"]
+      },
+      {
+        "hospital": "Apollo Hospitals",
+        "city": "Chennai / Hyderabad",
+        "rating": 4.8,
+        "accreditation": "JCI & NABH",
+        "roomTypes": {
+          "General Sharing": 82000,
+          "Semi-Private": 102000,
+          "Private Deluxe": 128000
+        },
+        "doctorFee": 26000,
+        "investigationsIncluded": ["Liver enzymes", "CBC", "Ultrasound review", "Tissue pathology"],
+        "inclusions": ["Complete lap surgery kit", "Surgeon and assistant fees", "2 days stay"],
+        "exclusions": ["Pre-existing cardiac clearance visits", "Special energy device disposables", "Special recovery room surcharge"]
+      }
+    ]
+  },
+  {
+    "id": "pkg_cataract",
+    "procedure": "Cataract Surgery (Phaco + Foldable Monofocal IOL)",
+    "category": "Ophthalmology",
+    "description": "Daycare sutureless phacoemulsification with imported foldable intraocular lens (IOL).",
+    "stayDays": 0,
+    "packages": [
+      {
+        "hospital": "Tata 1mg / Centre For Sight",
+        "city": "Pan India / Delhi NCR",
+        "rating": 4.8,
+        "accreditation": "NABH Accredited",
+        "roomTypes": {
+          "Daycare Standard": 28000,
+          "Daycare Premium": 38000,
+          "Daycare Multifocal": 65000
+        },
+        "doctorFee": 8000,
+        "investigationsIncluded": ["A-Scan Biometry", "IOL Master power calculation", "Pre-op IOP Tonometry"],
+        "inclusions": ["Phacoemulsification machine time", "Viscoelastic fluid & blades", "Post-op protective eye shield", "Same-day discharge lounge"],
+        "exclusions": ["Toric / Astigmatism lens upgrade (+₹20,000)", "Femtosecond laser (Blade-free) (+₹25,000)", "Post-surgery eye drops kit (₹800)"]
+      },
+      {
+        "hospital": "Apollo Hospitals Eye Clinic",
+        "city": "Chennai / Delhi NCR",
+        "rating": 4.7,
+        "accreditation": "JCI Accredited",
+        "roomTypes": {
+          "Daycare Standard": 32000,
+          "Daycare Premium": 42000,
+          "Daycare Multifocal": 72000
+        },
+        "doctorFee": 10000,
+        "investigationsIncluded": ["Optical coherence biometry", "Slit lamp evaluation", "Fundus examination"],
+        "inclusions": ["Foldable acrylic lens", "Surgeon fee", "Daycare recovery room (3-4 hours)"],
+        "exclusions": ["Trifocal / PanOptix upgrade", "Post-operative glasses prescription consultation"]
+      }
+    ]
+  },
+  {
+    "id": "pkg_exec_checkup",
+    "procedure": "Executive Comprehensive Health Package (Tata 1mg / Apollo ProHealth)",
+    "category": "Preventive Diagnostics",
+    "description": "Full-body metabolic, cardiovascular, renal, hepatic, and cancer screening panel with specialist consultation.",
+    "stayDays": 0,
+    "packages": [
+      {
+        "hospital": "Apollo ProHealth (Tata 1mg Partner)",
+        "city": "Pan India",
+        "rating": 4.9,
+        "accreditation": "CAP & NABL Certified",
+        "roomTypes": {
+          "Standard Day Package": 7500,
+          "Advanced Platinum Package": 14500,
+          "Executive Whole Body CT/MRI": 26000
+        },
+        "doctorFee": 2000,
+        "investigationsIncluded": [
+          "CBC (17 parameters)", "Complete Lipid Profile", "Liver Function Test (11 parameters)",
+          "Kidney Function Test & Electrolytes", "HbA1c & Fasting Glucose", "Thyroid Profile (T3, T4, TSH)",
+          "Vitamin D & B12", "TMT (Treadmill Test) / Echo", "USG Whole Abdomen", "Chest X-Ray", "Urine Routine"
+        ],
+        "inclusions": ["Physician Consultation", "Dietitian Lifestyle Counseling", "Cardiologist Review", "Digital Health Portal Access"],
+        "exclusions": ["CT Calcium Score (optional +₹3,500)", "Pap Smear / Mammography for women (add ₹1,800)", "Colonoscopy"]
+      },
+      {
+        "hospital": "Max Healthcare Preventive Lab",
+        "city": "Delhi NCR / Mumbai",
+        "rating": 4.7,
+        "accreditation": "NABL Accredited",
+        "roomTypes": {
+          "Standard Day Package": 8000,
+          "Advanced Platinum Package": 15500,
+          "Executive Whole Body CT/MRI": 28000
+        },
+        "doctorFee": 2200,
+        "investigationsIncluded": [
+          "Comprehensive Hemogram", "Lipid & Cardiac risk ratios", "Liver Enzymes (AST/ALT/ALP/GGT)",
+          "Renal panel (Creatinine/BUN/Uric Acid)", "HbA1c", "Thyroid TSH", "ECG", "Echocardiogram", "USG Abdomen"
+        ],
+        "inclusions": ["Senior Internal Medicine Doctor Consultation", "Complimentary Breakfast", "Full Digital Report Dossier"],
+        "exclusions": ["Carotid Doppler screening", "Bone Mineral Density (DEXA) Scan"]
+      }
+    ]
+  }
+]
+

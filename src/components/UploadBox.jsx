@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function UploadBox({ onFile, loading, loadSample }) {
   const [drag, setDrag] = useState(false);
+  const { t } = useLanguage();
 
   function handleDrop(e) {
     e.preventDefault();
@@ -27,13 +29,13 @@ export default function UploadBox({ onFile, loading, loadSample }) {
             if (f) { onFile(f); e.target.value = ""; }
           }}
         />
-        <strong>{loading ? "Reading your report…" : "Upload your lab report"}</strong>
-        <span className="hint">Drop a PDF here or click to choose one. Text-based PDFs only.</span>
+        <strong>{loading ? t("report.uploadReading") : t("report.uploadTitle")}</strong>
+        <span className="hint">{t("report.uploadHint")}</span>
       </label>
 
       <div className="or">
         <button className="sampleBtn" onClick={loadSample} disabled={loading}>
-          Try a sample report
+          {t("report.trySample")}
         </button>
       </div>
     </div>
