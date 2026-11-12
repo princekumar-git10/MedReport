@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PulseNav from "./components/PulseNav";
 import MedSyncHome from "./components/MedSyncHome";
+import ReliefLaserHealth from "./components/ReliefLaserHealth";
 import UploadBox from "./components/UploadBox";
 import ResultCard from "./components/ResultCard";
 import Summary from "./components/Summary";
@@ -19,7 +20,14 @@ import { useLanguage } from "./context/LanguageContext";
 import "./App.css";
 
 export default function App() {
-  const [activePage, setActivePage] = useState("home");
+  const getInitialPage = () => {
+    if (typeof window !== "undefined" && window.location.pathname.startsWith("/relief-laser-health")) {
+      return "relief";
+    }
+    return "home";
+  };
+
+  const [activePage, setActivePage] = useState(getInitialPage);
   const [results, setResults] = useState([]);
   const [activeReportName, setActiveReportName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,8 +36,27 @@ export default function App() {
 
   const handleNavigate = (page) => {
     setActivePage(page);
+    if (typeof window !== "undefined" && window.history) {
+      if (page === "relief") {
+        window.history.pushState({}, "", "/relief-laser-health");
+      } else if (page === "home") {
+        window.history.pushState({}, "", "/");
+      }
+    }
     window.scrollTo({ top: 0, behavior: "instant" });
   };
+
+  useEffect(() => {
+    const onPopState = () => {
+      if (window.location.pathname.startsWith("/relief-laser-health")) {
+        setActivePage("relief");
+      } else {
+        setActivePage("home");
+      }
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
 
   async function handleFile(file) {
     setLoading(true);
@@ -91,7 +118,18 @@ export default function App() {
         </main>
       )}
 
-      {/* ── 2. Diagnostic Report ── */}
+      {/* ── 2. Relief Laser Health (Smart Hospital Referral & Availability Network) ── */}
+      {activePage === "relief" && (
+        <main className="page-fade">
+          <ReliefLaserHealth
+            userEmail={auth.currentUser?.email}
+            onNavigate={handleNavigate}
+            results={results}
+          />
+        </main>
+      )}
+
+      {/* ── 3. Diagnostic Report ── */}
       {activePage === "report" && (
         <main className="page-fade">
           <header>

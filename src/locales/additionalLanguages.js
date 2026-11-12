@@ -28,6 +28,7 @@ export const ADDITIONAL_TRANSLATIONS = {
     },
     nav: {
       medsync: "મેડસિંક AI",
+      relief: "રીલીફ લેસર હેલ્થ",
       report: "ડાયગ્નોસ્ટિક રિપોર્ટ",
       risk: "ચેતવણીઓ",
       cost: "હોસ્પિટલ ખર્ચ",
@@ -338,6 +339,7 @@ export const ADDITIONAL_TRANSLATIONS = {
     },
     nav: {
       medsync: "ಮೆಡ್‌ಸಿಂಕ್ AI",
+      relief: "ರಿಲೀಫ್ ಲೇಸರ್ ಹೆಲ್ತ್",
       report: "ಡಯಾಗ್ನೋಸ್ಟಿಕ್ ವರದಿ",
       risk: "ಎಚ್ಚರಿಕೆಗಳು",
       cost: "ಆಸ್ಪತ್ರೆ ವೆಚ್ಚಗಳು",
@@ -648,6 +650,7 @@ export const ADDITIONAL_TRANSLATIONS = {
     },
     nav: {
       medsync: "മെഡ്‌സിങ്ക് AI",
+      relief: "റിലീഫ് ലേസർ ഹെൽത്ത്",
       report: "ഡയഗ്നോസ്റ്റിക് റിപ്പോർട്ട്",
       risk: "മുന്നറിയിപ്പുകൾ",
       cost: "ആശുപത്രി ചെലവുകൾ",
@@ -958,6 +961,7 @@ export const ADDITIONAL_TRANSLATIONS = {
     },
     nav: {
       medsync: "ਮੈਡਸਿੰਕ AI",
+      relief: "ਰਿਲੀਫ ਲੇਜ਼ਰ ਹੈਲਥ",
       report: "ਡਾਇਗਨੋਸਟਿਕ ਰਿਪੋਰਟ",
       risk: "ਚੇਤਾਵਨੀਆਂ",
       cost: "ਹਸਪਤਾਲ ਦੇ ਖਰਚੇ",
@@ -1298,3 +1302,4 @@ export const ADDITIONAL_TEST_NAMES = {
     "WBC Count": "ਡਬਲਯੂਬੀਸੀ ਕਾਊਂਟ",
   },
 };
+

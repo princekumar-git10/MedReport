@@ -9,15 +9,21 @@ function vercelApiDevPlugin() {
     name: 'vercel-api-dev-plugin',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (req.url && (req.url.startsWith('/api/chat') || req.url.startsWith('/api/translate'))) {
+        if (req.url && req.url.startsWith('/api/')) {
           try {
             // Ensure process.env has keys from .env.local
             const env = loadEnv('development', process.cwd(), '');
             Object.assign(process.env, env);
 
             const urlPath = req.url.split('?')[0];
-            const file = urlPath === '/api/chat' ? './api/chat.js' : './api/translate.js';
-            const { default: handler } = await import(file);
+            const endpoint = urlPath.replace('/api/', '');
+            const filePath = path.resolve(process.cwd(), 'api', `${endpoint}.js`);
+
+            if (!fs.existsSync(filePath)) {
+              return next();
+            }
+
+            const { default: handler } = await import(filePath);
 
             // Collect JSON body if present
             let body = {};

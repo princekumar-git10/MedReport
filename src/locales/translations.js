@@ -30,6 +30,7 @@ export const TRANSLATIONS = {
     },
     nav: {
       medsync: "MedSync AI",
+      relief: "Relief Laser Health",
       report: "Diagnostic Report",
       risk: "Alerts",
       cost: "Hospital Costs",
@@ -334,6 +335,7 @@ export const TRANSLATIONS = {
     },
     nav: {
       medsync: "मेडसिंक एआई",
+      relief: "रिलीफ लेजर हेल्थ",
       report: "डायग्नोस्टिक रिपोर्ट",
       risk: "अलर्ट्स",
       cost: "अस्पताल खर्च",
@@ -638,6 +640,7 @@ export const TRANSLATIONS = {
     },
     nav: {
       medsync: "মেডসিঙ্ক এআই",
+      relief: "রিলিফ লেজার হেলথ",
       report: "ডায়াগনস্টিক রিপোর্ট",
       risk: "অ্যালার্ট",
       cost: "হাসপাতালের খরচ",
@@ -942,6 +945,7 @@ export const TRANSLATIONS = {
     },
     nav: {
       medsync: "மெட்சிங்க் AI",
+      relief: "ரிலீஃப் லேசர் ஹெல்த்",
       report: "ஆய்வக அறிக்கை",
       risk: "எச்சரிக்கைகள்",
       cost: "மருத்துவமனை கட்டணம்",
@@ -1246,6 +1250,7 @@ export const TRANSLATIONS = {
     },
     nav: {
       medsync: "మెడ్‌సింక్ AI",
+      relief: "రిలీఫ్ లేజర్ హెల్త్",
       report: "డయాగ్నస్టిక్ రిపోర్ట్",
       risk: "హెచ్చరికలు",
       cost: "ఆసుపత్రి ఖర్చులు",
@@ -1550,6 +1555,7 @@ export const TRANSLATIONS = {
     },
     nav: {
       medsync: "मेडसिंक एआय",
+      relief: "रिलीफ लेझर हेल्थ",
       report: "निदान अहवाल",
       risk: "इशारे (अलर्ट्स)",
       cost: "रुग्णालय खर्च",
