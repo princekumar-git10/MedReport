@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { BOT_TRANSLATIONS, processHealthQuery } from "../utils/multilingualBot";
 import { useLanguage } from "../context/LanguageContext";
+import { formatMarkdown } from "../utils/formatMarkdown";
 
 export default function HealthBot({ results = [], initialQuery = "" }) {
   const { lang, setLang, t, languages } = useLanguage();
@@ -11,6 +12,7 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
   const [speakingIndex, setSpeakingIndex] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeModel, setActiveModel] = useState("mistralai/mistral-saba");
+  const [isOnline, setIsOnline] = useState(true);
   const [lastFailedQuery, setLastFailedQuery] = useState(null);
 
   const messagesEndRef = useRef(null);
@@ -107,7 +109,7 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
       return;
     }
 
-    const cleanText = text.replace(/[*#_•]/g, " ").replace(/\n+/g, ". ");
+    const cleanText = text.replace(/[*#_•`]/g, " ").replace(/\n+/g, ". ");
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = currentLangObj.voiceLang || "en-IN";
     utterance.rate = 0.95;
@@ -128,6 +130,7 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
     setSpeakingIndex(null);
     setIsGenerating(false);
     setLastFailedQuery(null);
+    setIsOnline(true);
 
     const welcomeText =
       tr.greeting +
@@ -148,8 +151,8 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
 
   // Send message to OpenRouter via serverless backend
   const handleSendMessage = async (textToSend) => {
-    const query = textToSend || input;
-    if (!query.trim() || isGenerating) return;
+    const query = (textToSend || input || "").trim();
+    if (!query || isGenerating) return;
 
     const userMsg = {
       id: "u_" + Date.now(),
@@ -172,9 +175,17 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
       value: r.value,
       unit: r.test?.unit || r.unit,
       status: r.status,
-      low: r.test?.low,
-      high: r.test?.high,
+      low: r.test?.low ?? r.low,
+      high: r.test?.high ?? r.high,
     }));
+
+    // Filter conversation history: exclude initial welcome message so LLM gets actual conversation
+    const historyPayload = updatedMessages
+      .filter((m) => !m.isWelcome && typeof m.text === "string" && m.text.trim().length > 0)
+      .map((m) => ({
+        role: m.sender === "user" ? "user" : "assistant",
+        content: m.text.trim(),
+      }));
 
     // Cancel any pending request
     if (abortControllerRef.current) {
@@ -188,10 +199,7 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: updatedMessages.map((m) => ({
-            role: m.sender === "user" ? "user" : "assistant",
-            content: m.text,
-          })),
+          messages: historyPayload,
           reportContext,
           language: lang,
           stream: true,
@@ -200,7 +208,15 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
       });
 
       if (!response.ok) {
-        throw new Error(`Server returned ${response.status}`);
+        let errDetails = `Server returned ${response.status}`;
+        try {
+          const errData = await response.json();
+          if (errData.error) errDetails = errData.error;
+          if (errData.details) errDetails += ` (${errData.details})`;
+        } catch {
+          // ignore json parse error
+        }
+        throw new Error(errDetails);
       }
 
       // Check if response is an SSE stream
@@ -209,6 +225,7 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let accumulatedText = "";
+        let buffer = "";
 
         // Add empty bot placeholder
         setMessages((prev) => [
@@ -228,25 +245,29 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
           done = readerDone;
 
           if (value) {
-            const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split("\n");
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            // Retain incomplete last line in buffer
+            buffer = lines.pop() || "";
 
             for (const line of lines) {
               const trimmed = line.trim();
               if (trimmed.startsWith("data: ")) {
-                const jsonStr = trimmed.slice(6);
+                const jsonStr = trimmed.slice(6).trim();
                 if (jsonStr === "[DONE]") break;
 
                 try {
                   const parsed = JSON.parse(jsonStr);
                   const delta = parsed.choices?.[0]?.delta?.content || "";
-                  accumulatedText += delta;
-
-                  setMessages((prev) =>
-                    prev.map((m) =>
-                      m.id === botMsgId ? { ...m, text: accumulatedText } : m
-                    )
-                  );
+                  if (delta) {
+                    accumulatedText += delta;
+                    setMessages((prev) =>
+                      prev.map((m) =>
+                        m.id === botMsgId ? { ...m, text: accumulatedText } : m
+                      )
+                    );
+                  }
+                  if (parsed.model) setActiveModel(parsed.model);
                 } catch {
                   // Incomplete JSON chunk, skip
                 }
@@ -255,19 +276,25 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
           }
         }
 
+        setIsOnline(true);
         // Finalize streaming
         setMessages((prev) =>
           prev.map((m) =>
             m.id === botMsgId
-              ? { ...m, text: accumulatedText || processHealthQuery(query, results, lang), isStreaming: false }
+              ? {
+                  ...m,
+                  text: accumulatedText || processHealthQuery(query, results, lang),
+                  isStreaming: false,
+                }
               : m
           )
         );
       } else {
-        // Fallback to JSON response
+        // Fallback to standard JSON response
         const data = await response.json();
         const botReply = data.reply || processHealthQuery(query, results, lang);
         if (data.model) setActiveModel(data.model);
+        setIsOnline(true);
 
         setMessages((prev) => [
           ...prev,
@@ -281,16 +308,23 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
       }
     } catch (err) {
       if (err.name === "AbortError") return;
-      console.warn("API error, falling back to local clinical engine:", err);
+      console.warn("OpenRouter API error:", err);
+      setIsOnline(false);
 
       // Graceful offline fallback + retry support
       const offlineReply = processHealthQuery(query, results, lang);
+      const isPureError = !offlineReply || offlineReply.includes("offline medical library");
+
+      const errorMessage = isPureError
+        ? `⚠️ **AI Service Notice**: Unable to reach OpenRouter cloud model (${err.message}).\n\n${offlineReply}`
+        : offlineReply;
+
       setMessages((prev) => [
         ...prev,
         {
           id: botMsgId,
           sender: "bot",
-          text: offlineReply,
+          text: errorMessage,
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           isFallback: true,
           failedQuery: query,
@@ -317,14 +351,18 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="bot-svg">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
             </svg>
-            <span className="bot-online-beacon" />
+            <span className="bot-online-beacon" style={{ background: isOnline ? "#10b981" : "#f59e0b" }} />
           </div>
           <div>
             <div className="bot-name-row">
               <h3 className="bot-title">{t("bot.title")}</h3>
-              <span className="bot-engine-badge">OpenRouter • Mistral Saba</span>
+              <span className="bot-engine-badge">
+                OpenRouter • {activeModel.split("/").pop() || "Mistral Saba"}
+              </span>
             </div>
-            <span className="bot-status-text">{t("bot.statusText")}</span>
+            <span className="bot-status-text">
+              {isOnline ? "Conversational AI & Clinical Assistant" : t("bot.statusText")}
+            </span>
           </div>
         </div>
 
@@ -360,10 +398,17 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
         </div>
       </div>
 
-      {/* ── Status Banner ── */}
+      {/* ── Status Banner (Online/Offline) ── */}
       <div className="bot-offline-strip">
-        <span className="strip-pip" />
-        <span>{t("bot.offlineNotice")}</span>
+        <span
+          className="strip-pip"
+          style={{ background: isOnline ? "#10b981" : "#f59e0b" }}
+        />
+        <span>
+          {isOnline
+            ? `⚡ MediSync AI Connected (OpenRouter • ${activeModel.split("/").pop() || "Mistral Saba"}) — General & Clinical Intelligence`
+            : (tr.offlineNoticeFallback || "⚠️ Operating in Offline Mode. Responses synthesized using local medical library.")}
+        </span>
       </div>
 
       {/* ── Conversation Message Flow ── */}
@@ -385,17 +430,13 @@ export default function HealthBot({ results = [], initialQuery = "" }) {
               <div className={`chat-bubble ${isBot ? "bot-bubble" : "user-bubble"}`}>
                 <div className="bubble-content">
                   {m.text ? (
-                    m.text.split("\n").map((line, i) => (
-                      <p key={i} className="bubble-line">
-                        {line.startsWith("###") ? (
-                          <strong className="line-h3">{line.replace("###", "")}</strong>
-                        ) : line.startsWith("•") || line.startsWith("*") ? (
-                          <span className="line-bullet">{line}</span>
-                        ) : (
-                          line
-                        )}
-                      </p>
-                    ))
+                    formatMarkdown(m.text, {
+                      lineClass: "bubble-line",
+                      headingClass: "bubble-heading",
+                      bulletClass: "bubble-list-item",
+                      codeBlockClass: "bot-code-block",
+                      hrClass: "resp-divider",
+                    })
                   ) : (
                     <div className="bot-typing-dots">
                       <span className="dot" />

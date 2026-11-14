@@ -12,39 +12,41 @@ export const LANGUAGES = [
 
 export const BOT_TRANSLATIONS = {
   en: {
-    greeting: "Hello! I am your AI Health Assistant (inspired by AskAnya & HealthPlix). I can answer questions about your lab report, discuss health markers, or search our offline medical library in your language. How can I help you today?",
-    noReport: "No lab report has been uploaded yet. You can still ask me about any blood test (e.g., Hemoglobin, Fasting Glucose, Cholesterol), or upload a PDF report on the Diagnostic Report page.",
+    greeting: "Hello! I am MediSync AI, your versatile conversational assistant and clinical report guide. I can answer any questions you have—from general knowledge, science, and coding to analyzing your lab reports and health markers. How can I help you today?",
+    noReport: "No lab report has been uploaded yet. You can ask me any question (general, scientific, or medical), or upload a PDF report on the Diagnostic Report page for personal lab analysis.",
     allNormal: "Great news! All your analyzed test results are within normal clinical ranges. Keep maintaining your healthy lifestyle and routine checkups.",
     urgentIntro: "The following markers require medical attention because they show significant deviation from reference ranges:",
     doctorIntro: "Here are priority questions tailored to your report that you can ask your physician during your next visit:",
     riskIntro: "Your calculated Patient Deterioration Risk Score is",
     pointsToDiscuss: "Key points to discuss with your doctor:",
-    offlineNotice: "⚡ Operating in Offline Clinical Mode. Responses synthesized using local medical library.",
+    offlineNotice: "⚡ Connected to AI Engine (OpenRouter) • General & Clinical Intelligence",
+    offlineNoticeFallback: "⚠️ Operating in Offline Mode. Responses synthesized using local medical library.",
     samplePrompts: [
+      "Explain artificial intelligence",
       "Which tests need attention?",
-      "What should I ask my doctor?",
-      "Explain my blood sugar & HbA1c",
-      "Is my Hemoglobin normal?",
-      "Explain LDL & Cholesterol",
-      "What does high Creatinine mean?"
+      "What is hemoglobin and its normal range?",
+      "Explain diabetes in simple language",
+      "Write a Python program to reverse a string",
+      "What is the difference between Java and C++?"
     ]
   },
   hi: {
-    greeting: "नमस्ते! मैं आपका एआई स्वास्थ्य सहायक हूँ। मैं आपकी लैब रिपोर्ट के परिणामों, सामान्य सीमाओं और डॉक्टर से पूछे जाने वाले सवालों का जवाब आपकी भाषा में दे सकता हूँ। आज मैं आपकी क्या सहायता करूँ?",
-    noReport: "अभी तक कोई लैब रिपोर्ट लोड नहीं हुई है। फिर भी आप मुझसे किसी भी मेडिकल टेस्ट (जैसे हीमोग्लोबिन, शुगर, थायरॉइड, कोलेस्ट्रॉल) के बारे में पूछ सकते हैं।",
+    greeting: "नमस्ते! मैं मेडीसिंक एआई (MediSync AI) हूँ। मैं आपके किसी भी सवाल का जवाब दे सकता हूँ—सामान्य ज्ञान, विज्ञान, कोडिंग से लेकर आपकी लैब रिपोर्ट और स्वास्थ्य परीक्षणों के विश्लेषण तक। आज मैं आपकी क्या सहायता करूँ?",
+    noReport: "अभी तक कोई लैब रिपोर्ट लोड नहीं हुई है। फिर भी आप मुझसे कोई भी सामान्य या मेडिकल सवाल पूछ सकते हैं, या डायग्नोस्टिक रिपोर्ट पेज पर पीडीएफ अपलोड कर सकते हैं।",
     allNormal: "शानदार! आपकी रिपोर्ट के सभी टेस्ट सामान्य सीमा (Normal Range) के अंदर हैं। अपनी स्वस्थ दिनचर्या और नियमित जांच जारी रखें।",
     urgentIntro: "आपकी रिपोर्ट में निम्नलिखित टेस्टों पर तुरंत ध्यान देने की आवश्यकता है क्योंकि ये सामान्य सीमा से काफी बाहर हैं:",
     doctorIntro: "आपकी रिपोर्ट के आधार पर अपने डॉक्टर से परामर्श के लिए महत्वपूर्ण सवाल:",
     riskIntro: "आपका अनुमानित पेशेंट डिटेरिओरेशन रिस्क स्कोर है",
     pointsToDiscuss: "डॉक्टर के साथ चर्चा करने योग्य बिंदु:",
-    offlineNotice: "⚡ ऑफ़लाइन क्लिनिकल मोड सक्रिय। इंटरनेट के बिना सुरक्षित स्थानीय लाइब्रेरी से उत्तर।",
+    offlineNotice: "⚡ एआई इंजन से कनेक्टेड (OpenRouter) • बहुउद्देशीय एवं क्लिनिकल सहायक",
+    offlineNoticeFallback: "⚠️ ऑफ़लाइन क्लिनिकल मोड सक्रिय। इंटरनेट के बिना सुरक्षित स्थानीय लाइब्रेरी से उत्तर।",
     samplePrompts: [
+      "आर्टिफिशियल इंटेलिजेंस क्या है?",
       "किन टेस्टों पर ध्यान देना चाहिए?",
-      "डॉक्टर से क्या पूछना चाहिए?",
-      "मेरा हीमोग्लोबिन कैसा है?",
-      "ब्लड शुगर और HbA1c का क्या मतलब है?",
-      "कोलेस्ट्रॉल और एलडीएल समझाइए",
-      "क्रिएटिनिन बढ़ने से क्या होता है?"
+      "हीमोग्लोबिन की सामान्य सीमा क्या है?",
+      "डायबिटीज को आसान भाषा में समझाइए",
+      "जावा और सी++ में क्या अंतर है?",
+      "डॉक्टर से क्या पूछना चाहिए?"
     ]
   },
   bn: {
@@ -117,6 +119,18 @@ export const BOT_TRANSLATIONS = {
 export function processHealthQuery(query, results = [], lang = "en") {
   const q = query.trim().toLowerCase();
   const tr = BOT_TRANSLATIONS[lang] || BOT_TRANSLATIONS.en;
+
+  // 0. Conversational Greetings
+  if (
+    q === "hello" || q === "hi" || q === "hey" || q === "namaste" ||
+    q.startsWith("hello ") || q.startsWith("hi ") || q.startsWith("hey ") ||
+    q.includes("how are you") || q.includes("kaise ho") || q.includes("namaskar") ||
+    q.includes("नमस्ते") || q.includes("हैलो") || q.includes("हाय")
+  ) {
+    return lang === "hi"
+      ? "नमस्ते! मैं मेडीसिंक एआई (MediSync AI) हूँ। मैं आपके किसी भी सवाल का जवाब दे सकता हूँ—चाहे वह सामान्य ज्ञान, विज्ञान, कोडिंग हो या आपकी लैब रिपोर्ट और मेडिकल टेस्ट्स का विश्लेषण। मैं आपकी क्या मदद करूँ?"
+      : "Hello! I am MediSync AI. I can answer any questions you have—from general knowledge, science, and programming to detailed explanations of your lab test reports and clinical markers. How can I help you today?";
+  }
 
   // 1. Attention / Urgent Tests Query
   if (
@@ -220,11 +234,9 @@ export function processHealthQuery(query, results = [], lang = "en") {
     return resp;
   }
 
-  // 5. Default helpful guidance
-  return `I reviewed your query for medical lab insights. You can ask me:\n` +
-    `• "Which tests need attention?" to list abnormal values in your uploaded report.\n` +
-    `• "What questions should I ask my doctor?" to get personalized questions.\n` +
-    `• Inquire about any of our 70 offline markers like "Hemoglobin", "Glucose", "TSH", "Creatinine", or "SGPT".\n` +
-    `• Switch your preferred regional language (Hindi, Bengali, Tamil, Telugu, Marathi) from the top language bar.`;
+  // 5. Default guidance when running in local offline library mode
+  return lang === "hi"
+    ? `मैं वर्तमान में स्थानीय मेडिकल लाइब्रेरी मोड में संचालित हो रहा हूँ।\n• किसी भी रक्त परीक्षण (जैसे हीमोग्लोबिन, शुगर, टीएसएच, क्रिएटिनिन, लिपिड प्रोफाइल) के बारे में पूछें।\n• अपनी रिपोर्ट के असामान्य परीक्षण जानने के लिए "किन टेस्टों पर ध्यान देना चाहिए?" पूछें।\n• ओपनराउटर एआई क्लाउड कनेक्ट होते ही आप किसी भी विषय (सामान्य ज्ञान, विज्ञान, कोडिंग) पर प्रश्न पूछ सकते हैं!`
+    : `I am currently answering via the offline medical library (covering 70+ lab markers like Hemoglobin, Glucose, Creatinine, TSH, Platelets).\n\n• Ask about any laboratory test or reference ranges\n• Ask "Which tests need attention?" to review uploaded report anomalies\n• When connected to the cloud AI, you can ask ANY question (general knowledge, science, programming, and everyday topics)!`;
 }
 

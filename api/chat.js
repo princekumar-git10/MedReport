@@ -1,8 +1,8 @@
 /**
  * Vercel Serverless API Function: /api/chat
- * Integrates OpenRouter for MediSync AI Medical Assistant
+ * Integrates OpenRouter for MediSync AI Conversational & Clinical Assistant
  * Primary model: mistralai/mistral-saba
- * Fallback model: google/gemma-3-27b-it
+ * Fallback models: google/gemma-3-27b-it, google/gemini-2.5-flash, meta-llama/llama-3.3-70b-instruct
  */
 
 const LANGUAGE_LABELS = {
@@ -56,55 +56,81 @@ export default async function handler(req, res) {
     }
 
     const primaryModel = process.env.OPENROUTER_MODEL || "mistralai/mistral-saba";
-    const fallbackModel = process.env.OPENROUTER_FALLBACK_MODEL || "google/gemma-3-27b-it";
+    const configuredFallback = process.env.OPENROUTER_FALLBACK_MODEL || "google/gemma-3-27b-it";
+    
+    // Resilient fallback candidate chain in case of provider rate-limits or temporary outages
+    const modelCandidates = [
+      primaryModel,
+      configuredFallback,
+      "google/gemini-2.5-flash",
+      "meta-llama/llama-3.3-70b-instruct"
+    ].filter((m, idx, arr) => m && arr.indexOf(m) === idx);
 
     const targetLang = LANGUAGE_LABELS[language] || "English";
 
-    // Build MediSync Clinical System Prompt
-    let systemPrompt = `You are MediSync AI, a world-class, empathetic, and culturally aware clinical decision support and health communication assistant.
-Your mission is to help patients understand their laboratory blood and diagnostic reports, clearly explaining what abnormal and normal test markers mean in easy-to-understand terms.
+    // Build comprehensive, non-restrictive conversational & clinical system prompt
+    let systemPrompt = `You are MediSync AI, a highly intelligent, empathetic, versatile, and culturally aware conversational AI assistant. You possess broad general knowledge across science, technology, programming, history, education, and daily life, alongside deep specialized capability in healthcare, laboratory diagnostics, and blood report interpretation.
 
-STRICT MEDICAL & ETHICAL GUARDRAILS:
-1. Educational Information Only: You do not provide definitive diagnoses, write medical prescriptions, or claim to cure diseases. Always advise the patient to discuss their results with their physician or qualified healthcare provider for personalized treatment.
-2. Empathy & Clarity: Explain medical terms (e.g., Creatinine, HbA1c, LDL, Hemoglobin, SGPT) in plain, reassuring language suitable for patients and their families.
-3. Language Requirement: You MUST reply entirely and fluently in ${targetLang}. Keep clinical marker names and measurement units (mg/dL, g/dL, %, etc.) recognizable.
-4. Actionable Next Steps: When relevant, suggest thoughtful questions the patient can ask their doctor during their next clinical consultation.`;
+CORE CONVERSATIONAL BEHAVIORS:
+1. Answer Directly & Comprehensively: Answer ANY question the user asks—whether about general topics (science, mathematics, history, programming, geography, general knowledge), casual greetings, everyday advice, or health and medicine. NEVER refuse to answer a question simply because it is not medical or does not match a predefined template.
+2. Context & Continuity: Maintain coherent conversation context across turns. Understand pronouns (e.g. "it", "they", "its"), references to prior messages, and follow-up prompts such as "Explain more", "Why?", "What about this?", "Give an example", or "How does that compare?".
+3. Adaptive Depth & Tone: Provide concise, clear answers for quick or simple queries, and thorough, step-by-step structured explanations for complex concepts. Format answers cleanly using Markdown (readable paragraphs, headings, bullet points, and code blocks where applicable).
+4. Language Fluency: You must converse fluently in ${targetLang}. If the user addresses you in a different language or dialect, adapt naturally while keeping technical terms and medical units (e.g. mg/dL, g/dL, %) clear and recognizable.
+5. Clarification: If a user query is genuinely ambiguous, provide a helpful general answer first and politely ask clarifying questions to narrow down what they need.
+
+SPECIALIZED MEDICAL & HEALTHCARE GUIDANCE:
+1. Educational & Supportive: Explain medical terminology, laboratory parameters, and physiological mechanisms in plain, reassuring language suitable for patients and families.
+2. Information, Not Diagnosis: Clearly distinguish educational health information from a definitive clinical diagnosis. Never claim to diagnose a disease with certainty or prescribe prescription medications. Recommend consulting a licensed healthcare professional for individual medical decisions.
+3. Accurate & Grounded: Never invent laboratory values, normal ranges, or clinical facts. When discussing medical markers, reference established clinical standards.
+4. Red Flags & Emergencies: If a user mentions emergency warning signs (such as acute severe chest pain, sudden numbness/paralysis, severe shortness of breath, heavy uncontrolled bleeding, or loss of consciousness), immediately advise them to seek emergency medical care or call local emergency services.`;
 
     // Inject Report Context if available
     if (Array.isArray(reportContext) && reportContext.length > 0) {
-      systemPrompt += `\n\n═════ ACTIVE PATIENT LAB REPORT DATA (${reportContext.length} tests analyzed) ═════\n`;
+      systemPrompt += `\n\n═════ ACTIVE PATIENT LAB REPORT DATA (${reportContext.length} tests loaded) ═════\n`;
       reportContext.forEach((t) => {
         const refRange = (t.low !== undefined && t.high !== undefined) ? `[Ref: ${t.low} - ${t.high} ${t.unit || ""}]` : "";
         systemPrompt += `• ${t.name}: ${t.value} ${t.unit || ""} — Status: ${t.status || "Normal"} ${refRange}\n`;
       });
       systemPrompt += `═════════════════════════════════════════════════════════════════\n`;
-      systemPrompt += `Directly reference the patient's specific numbers, reference ranges, and abnormal markers in your response when answering their query.`;
+      systemPrompt += `When the user asks about their specific health, report, or test markers, directly reference their actual numbers, reference ranges, and clinical status from the table above. For unrelated non-medical questions, answer normally without forcing lab report data into the reply.`;
     }
 
-    // Format conversation history for OpenRouter
+    // Clean and sanitize messages history: filter out empty messages and limit to last 20 turns
+    const cleanHistory = messages
+      .filter((m) => {
+        const text = m.text || m.content;
+        return typeof text === "string" && text.trim().length > 0 && !m.isWelcome;
+      })
+      .slice(-20)
+      .map((m) => ({
+        role: m.sender === "user" || m.role === "user" ? "user" : "assistant",
+        content: (m.text || m.content).trim()
+      }));
+
+    if (cleanHistory.length === 0) {
+      return res.status(400).json({ error: "No valid user messages found in payload." });
+    }
+
     const formattedMessages = [
       { role: "system", content: systemPrompt },
-      ...messages.slice(-10).map((m) => ({
-        role: m.sender === "user" || m.role === "user" ? "user" : "assistant",
-        content: m.text || m.content || ""
-      }))
+      ...cleanHistory
     ];
 
-    // Helper to call OpenRouter
+    // Helper to call OpenRouter API
     async function callOpenRouter(modelName, isStreaming) {
       const resp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${apiKey}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://medisync-ai.vercel.app",
+          "HTTP-Referer": process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://med-report-two.vercel.app",
           "X-Title": "MediSync AI"
         },
         body: JSON.stringify({
           model: modelName,
           messages: formattedMessages,
-          temperature: 0.35,
-          max_tokens: 1200,
+          temperature: 0.6,
+          max_tokens: 1500,
           stream: isStreaming
         })
       });
@@ -112,21 +138,33 @@ STRICT MEDICAL & ETHICAL GUARDRAILS:
       return resp;
     }
 
-    // Attempt 1: Primary Model (mistralai/mistral-saba)
-    let openRouterRes = await callOpenRouter(primaryModel, stream);
+    // Attempt model candidates sequentially until a successful response is received
+    let openRouterRes = null;
+    let successfulModel = primaryModel;
+    let lastErrorText = "";
 
-    // If Primary fails or returns non-200, attempt Fallback Model (google/gemma-3-27b-it)
-    if (!openRouterRes.ok) {
-      console.warn(`Primary model ${primaryModel} failed with status ${openRouterRes.status}. Retrying with fallback model ${fallbackModel}...`);
-      openRouterRes = await callOpenRouter(fallbackModel, stream);
+    for (const modelCandidate of modelCandidates) {
+      try {
+        const resCandidate = await callOpenRouter(modelCandidate, stream);
+        if (resCandidate.ok) {
+          openRouterRes = resCandidate;
+          successfulModel = modelCandidate;
+          break;
+        } else {
+          lastErrorText = await resCandidate.text();
+          console.warn(`Model candidate '${modelCandidate}' returned status ${resCandidate.status}: ${lastErrorText.slice(0, 150)}`);
+        }
+      } catch (callErr) {
+        lastErrorText = callErr.message;
+        console.warn(`Model candidate '${modelCandidate}' connection failed: ${callErr.message}`);
+      }
     }
 
-    if (!openRouterRes.ok) {
-      const errText = await openRouterRes.text();
-      console.error("OpenRouter API error:", errText);
-      return res.status(openRouterRes.status || 502).json({
+    if (!openRouterRes || !openRouterRes.ok) {
+      console.error("All OpenRouter model candidates failed. Last error:", lastErrorText);
+      return res.status(502).json({
         error: "OpenRouter service returned an error. Please try again in a few moments.",
-        details: errText
+        details: lastErrorText
       });
     }
 
@@ -138,20 +176,25 @@ STRICT MEDICAL & ETHICAL GUARDRAILS:
         "Connection": "keep-alive"
       });
 
-      const reader = openRouterRes.body.getReader();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        res.write(value);
+      try {
+        const reader = openRouterRes.body.getReader();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          res.write(value);
+        }
+      } catch (streamErr) {
+        console.error("Streaming error in /api/chat:", streamErr);
+      } finally {
+        res.end();
       }
-      res.end();
       return;
     }
 
     // Standard JSON Response Handler
     const data = await openRouterRes.json();
     const replyText = data.choices?.[0]?.message?.content || "";
-    const usedModel = data.model || primaryModel;
+    const usedModel = data.model || successfulModel;
 
     return res.status(200).json({
       reply: replyText,
@@ -162,9 +205,8 @@ STRICT MEDICAL & ETHICAL GUARDRAILS:
   } catch (err) {
     console.error("Fatal /api/chat error:", err);
     return res.status(500).json({
-      error: "Internal server error while processing your clinical query.",
+      error: "Internal server error while processing your query.",
       message: err.message
     });
   }
 }
-

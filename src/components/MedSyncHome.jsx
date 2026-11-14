@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { processHealthQuery } from "../utils/multilingualBot";
+import { formatMarkdown } from "../utils/formatMarkdown";
 
 export default function MedSyncHome({ userEmail, onNavigate, results = [] }) {
   const { t, lang } = useLanguage();
@@ -192,17 +193,13 @@ export default function MedSyncHome({ userEmail, onNavigate, results = [] }) {
             <button className="resp-close-btn" onClick={() => setAnswer(null)}>✕</button>
           </div>
           <div className="resp-body">
-            {answer.text.split("\n").map((line, idx) => (
-              <p key={idx} className="resp-line">
-                {line.startsWith("###") ? (
-                  <strong className="resp-h3">{line.replace("###", "")}</strong>
-                ) : line.startsWith("•") || line.startsWith("*") ? (
-                  <span className="resp-bullet">{line}</span>
-                ) : (
-                  line
-                )}
-              </p>
-            ))}
+            {formatMarkdown(answer.text, {
+              lineClass: "resp-line",
+              headingClass: "resp-h3",
+              bulletClass: "resp-bullet",
+              codeBlockClass: "bot-code-block",
+              hrClass: "resp-divider",
+            })}
           </div>
           {results.length === 0 && (
             <div className="resp-action-bar">

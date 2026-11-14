@@ -2525,17 +2525,108 @@ footer {
   margin-bottom: 0;
 }
 
-.line-h3 {
+.line-h3, .bubble-heading {
   display: block;
   font-family: "Fraunces", Georgia, serif;
   font-size: 1.05rem;
+  font-weight: 700;
   color: var(--teal);
+  margin-top: 6px;
   margin-bottom: 4px;
 }
 
-.line-bullet {
+.user-bubble .line-h3,
+.user-bubble .bubble-heading {
+  color: #ffffff;
+}
+
+.line-bullet, .bubble-list-item {
   display: block;
-  padding-left: 4px;
+  padding-left: 6px;
+  margin-bottom: 3px;
+}
+
+.bubble-strong {
+  font-weight: 700;
+}
+
+.bot-inline-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: rgba(15, 92, 99, 0.08);
+  color: #0f5c63;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.88em;
+}
+
+.user-bubble .bot-inline-code {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.bot-code-block {
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 12px 14px;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin: 8px 0;
+  border: 1px solid #334155;
+}
+
+.bot-code-block code {
+  color: inherit;
+  background: transparent;
+  padding: 0;
+}
+
+.bot-error-card {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  margin-bottom: 6px;
+}
+
+/* Formatted Markdown Enhancements */
+.formatted-bold {
+  font-weight: 700;
+  color: inherit;
+}
+
+.formatted-italic {
+  font-style: italic;
+}
+
+.formatted-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: rgba(15, 92, 99, 0.08);
+  color: #0f5c63;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.88em;
+}
+
+.user-bubble .formatted-code {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.resp-divider {
+  border: 0;
+  border-top: 1.5px solid #e2ecee;
+  margin: 12px 0;
+}
+
+.bullet-dot {
+  color: #0f5c63;
+  font-weight: 700;
+  margin-right: 4px;
 }
 
 .bubble-meta {
